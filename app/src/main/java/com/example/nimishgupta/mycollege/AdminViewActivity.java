@@ -32,7 +32,7 @@ public class AdminViewActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        mDatabase=FirebaseDatabase.getInstance().getReference().child("UserResponses");
+        mDatabase=FirebaseDatabase.getInstance().getReference().child("allBooking");
         setContentView(R.layout.activity_admin_view);
 //        setContentView(R.layout.blog_row);
         mDatabase.keepSynced(true);
@@ -122,7 +122,7 @@ public class AdminViewActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 //                    Toast.makeText(AdminViewActivity.this,"Kaam kr raha hai",Toast.LENGTH_SHORT).show();
-                    
+
                 }
             });
         }

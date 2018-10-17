@@ -1,10 +1,11 @@
 package com.example.nimishgupta.mycollege;
 
 public class UserResponse {
-    private  String reason, slotChoosen, userName, whatBooked, status;
+    private  String reason, slotChoosen, userName, whatBooked, status,uDate,uTime, uNextDate;
     private  int mike,projector;
 
-    public UserResponse(String reason, String slotChoosen, String userName, int mike, int projector, String whatBooked, String status) {
+    public UserResponse(String reason, String slotChoosen, String userName, int mike, int projector, String whatBooked, String status,
+                        String uDate,String uTime,String uNextDate) {
         this.reason = reason;
         this.slotChoosen = slotChoosen;
         this.userName = userName;
@@ -12,11 +13,20 @@ public class UserResponse {
         this.projector = projector;
         this.whatBooked = whatBooked;
         this.status = status;
+        this.uDate = uDate;
+        this.uTime = uTime;
+        this.uNextDate = uNextDate;
     }
 
     public UserResponse(){
 
     }
+//    public Button getAcceptBtn(){
+//        return acceptBtn;
+
+
+
+//    }
 
     public String getReason() {
         return reason;
@@ -44,5 +54,17 @@ public class UserResponse {
 
     public String getStatus(){
         return status;
+    }
+
+    public String getuDate() {
+        return uDate;
+    }
+
+    public String getuTime() {
+        return uTime;
+    }
+
+    public String getuNextDate() {
+        return uNextDate;
     }
 }

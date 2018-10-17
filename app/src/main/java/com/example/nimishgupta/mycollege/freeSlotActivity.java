@@ -26,7 +26,11 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class freeSlotActivity extends AppCompatActivity {
 
@@ -59,6 +63,7 @@ public class freeSlotActivity extends AppCompatActivity {
 //                progressDialog.dismiss();
             }
         });
+
 
 
         if(isOnline()) {
@@ -216,7 +221,7 @@ public class freeSlotActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(freeSlotActivity.this);
         dialog.setTitle("Enter Details..");
         dialog.setContentView(R.layout.input_box);
-       // EditText editText = (EditText)dialog.findViewById(R.id.reason);
+
         reasonForBooking = (EditText)dialog.findViewById(R.id.reason);
         submit = (Button)dialog.findViewById(R.id.submitButton);
         mikeCBox = (CheckBox)dialog.findViewById(R.id.checkBoxMike);
@@ -228,8 +233,19 @@ public class freeSlotActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int mikeReqd=0, projectorReqd=0;
-                //String newValue = choosedSlot.getText().toString();
-                String statusOfBooking = "P";
+                String statusOfBooking = "Pending";
+
+                Date today = new Date();
+                SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss");
+                SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+                String dateToStr = date.format(today);
+                String timeToStr = time.format(today);
+
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.DATE, 1);
+                SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+                String nextDateStr = format1.format(c.getTime());
+
                 String mReason = reasonForBooking.getText().toString();
                 SharedPreferences sp = freeSlotActivity.this.getSharedPreferences("com.example.nimishgupta.mycollege",MODE_PRIVATE);
                 String userName = sp.getString("userID","default");
@@ -241,13 +257,16 @@ public class freeSlotActivity extends AppCompatActivity {
                             //Toast.makeText(freeSlotActivity.this,"share data "+userName,Toast.LENGTH_SHORT).show();
 
                             final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
+                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("allBooking");
+
                             rootRef.setValue("NA");
                             String id = firebaseUserResponse.push().getKey();
                             if (mikeCBox.isChecked()) mikeReqd = 1;
                             if (projectorCBox.isChecked()) projectorReqd = 1;
-                            UserResponse userResponse = new UserResponse(mReason, newValue, userName, mikeReqd, projectorReqd,labNumber ,statusOfBooking);
+                            UserResponse userResponse = new UserResponse(mReason, newValue, userName, mikeReqd, projectorReqd,labNumber ,statusOfBooking,dateToStr,timeToStr,nextDateStr);
                             firebaseUserResponse.child(id).setValue(userResponse);
-                            Toast.makeText(freeSlotActivity.this, newValue + "' slot booking is in Progress.", Toast.LENGTH_LONG).show();
+                            firebaseUserResponseForAdmin.child(id).setValue(userResponse);
+                            Toast.makeText(freeSlotActivity.this, newValue + " slot is booked", Toast.LENGTH_LONG).show();
                             finish();
                         }else {
                             Toast.makeText(freeSlotActivity.this,"Enter your reason", Toast.LENGTH_LONG).show();
@@ -258,13 +277,16 @@ public class freeSlotActivity extends AppCompatActivity {
                         if (!TextUtils.isEmpty(newValue) && !TextUtils.isEmpty(mReason)) {
                             final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("LTs").child(ltno).child(ltSlot).child(newValue);
                             final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
+                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("allBooking");
+
                             rootRef.setValue("NA");
                             String id = firebaseUserResponse.push().getKey();
                             if (mikeCBox.isChecked()) mikeReqd = 1;
                             if (projectorCBox.isChecked()) projectorReqd = 1;
-                            UserResponse userResponse = new UserResponse(mReason, newValue, userName, mikeReqd, projectorReqd, ltno, statusOfBooking);
+                            UserResponse userResponse = new UserResponse(mReason, newValue, userName, mikeReqd, projectorReqd, ltno, statusOfBooking,dateToStr,timeToStr,nextDateStr);
                             firebaseUserResponse.child(id).setValue(userResponse);
-                            Toast.makeText(freeSlotActivity.this, newValue + "' slot booking is in Progress.", Toast.LENGTH_LONG).show();
+                            firebaseUserResponseForAdmin.child(id).setValue(userResponse);
+                            Toast.makeText(freeSlotActivity.this, newValue + " slot is booked", Toast.LENGTH_LONG).show();
 
                             finish();
                         }else {

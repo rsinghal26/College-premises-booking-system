@@ -3,6 +3,7 @@ package com.example.nimishgupta.mycollege;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -15,6 +16,8 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 try {
                     sleep(1500);
+//                    SplashScreen.this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
                     finish();

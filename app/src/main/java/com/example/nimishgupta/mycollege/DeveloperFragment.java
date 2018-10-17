@@ -105,9 +105,11 @@ public class DeveloperFragment extends Fragment {
                     userViewHolder.setSlot(model.getSlotChoosen());
                     userViewHolder.setMike(model.getMike());
                     userViewHolder.setProjector(model.getProjector());
-                    //userViewHolder.setUser(model.getUserName());
                     userViewHolder.setNumber(model.getWhatBooked());
                     userViewHolder.setStatus(model.getStatus());
+                    userViewHolder.setuDate(model.getuDate());
+                    userViewHolder.setuTime(model.getuTime());
+                    userViewHolder.setuNextDate(model.getuNextDate());
 //                }
             }
         };
@@ -163,6 +165,18 @@ public class DeveloperFragment extends Fragment {
         public void setNumber(String number ){
             TextView  number_= (TextView)itemView.findViewById(R.id.whatBooked);
             number_.setText(String.valueOf(number));
+        }
+        public void setuDate(String date1){
+            TextView date = (TextView)itemView.findViewById(R.id.dateBooked);
+            date.setText(String.valueOf(date1));
+        }
+        public void setuTime(String time1){
+            TextView time = (TextView)itemView.findViewById(R.id.timeBooked);
+            time.setText(String.valueOf(time1));
+        }
+        public void setuNextDate(String date2){
+            TextView date = (TextView)itemView.findViewById(R.id.forBooked);
+            date.setText(String.valueOf(date2));
         }
     }
 }
