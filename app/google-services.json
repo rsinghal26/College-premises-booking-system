@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "365988291064",
+    "firebase_url": "https://college-premises-booking-e6844.firebaseio.com",
+    "project_id": "college-premises-booking-e6844",
+    "storage_bucket": "college-premises-booking-e6844.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365988291064:android:489873bc5e4e9f77",
+        "android_client_info": {
+          "package_name": "com.example.nimishgupta.mycollege"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365988291064-5rc46ke91hv9af8d0k5mfd566v8jml59.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nimishgupta.mycollege",
+            "certificate_hash": "c45cd2b2c0f2febd4a127ea316bffa733e12c827"
+          }
+        },
+        {
+          "client_id": "365988291064-0ii4m4kd5bomo798ntft147meft79jae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbj1YRa3jjROV71QQsVQ0lubHk-XSmogw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365988291064-0ii4m4kd5bomo798ntft147meft79jae.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

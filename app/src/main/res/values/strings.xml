@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">MyCollege</string>
+
+    <!--Login Activity-->
+    <string name="email_hint">Enter E-mail</string>
+    <string name="pwd_hint">Enter password</string>
+    <string name="signinButton">Sign- In</string>
+
+    <!--Bottom Navigation Activity-->
+    <string name="title_LT">LT\'s</string>
+    <string name="title_Labs">Labs</string>
+    <string name="title_SAC">SAC</string>
+    <string name="title_user">Me</string>
+    <string name="title_activity_bottom_navigation">Premises Booking</string>
+
+    <!--Lecture Fragment-->
+    <string name="LTNumber">Choose LT Number</string>
+    <string name="time_slot">Choose your Time-Slot</string>
+
+    <string-array name="lectureHallSize">
+        <item>LT-1</item>
+        <item>LT-2</item>
+        <item>LT-3</item>
+        <item>LT-4</item>
+        <item>LT-5</item>
+        <item>LT-6</item>
+        <item>LT-7</item>
+        <item>LT-8</item>
+        <item>LT-9</item>
+        <item>LT-10</item>
+    </string-array>
+
+    <string-array name="timeSlotofLT">
+        <item>Morning (8:00 am-12:00 noon)</item>
+        <item>AfterNoon (12:00 noon-5:00 pm)</item>
+        <item>Evening (5:00 pm-9:00 pm)</item>
+    </string-array>
+
+
+    <!--For LAB section-->
+    <string name="labNumber">Choose Lab</string>
+    <string name="labTiming">Choose Time-Slot</string>
+    <string-array name="lab_number">name>
+        <item>Lab-1</item>
+        <item>Lab-2</item>
+        <item>Lab-3</item>
+    </string-array>
+    <string-array name="timeSlotOfLab">
+        <item>Morning (8:00 am-12:00 noon)</item>
+        <item>AfterNoon (12:00 noon-6:00 pm)</item>
+    </string-array>
+
+
+    <!--Developers Fragment-->
+    <string name="sign_out_button">Sign-out</string>
+
+
+    <!--Free slot activity-->
+
+
+</resources>
