@@ -10,139 +10,152 @@
     android:padding="10dp"
     android:layout_margin="10dp">
 
-    <android.support.constraint.ConstraintLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:background="#f2ecec"
         android:orientation="vertical"
         android:padding="10dp">
-
-        <TextView
-            android:id="@+id/whatBooked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/userWhoBooked"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_toLeftOf="@+id/userReqdslot"
-            android:hint="wBook"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/userReqdslot"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/userWhoBooked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:layout_marginEnd="8dp"
             android:text="User Name"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toStartOf="@+id/whatBooked"
-            app:layout_constraintHorizontal_bias="0.053"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/userReqdslot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/userWhoBooked"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_toEndOf="@+id/reasonReqdForBooking"
-            android:text="Slot"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+             />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
 
         <TextView
             android:id="@+id/reasonReqdForBooking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:text="Reason of booking"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.041"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userWhoBooked"
-            app:layout_constraintVertical_bias="0.0" />
+             />
 
-        <TextView
-            android:id="@+id/ifMikeReqd"
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/rejectButton"
-            android:layout_alignStart="@+id/ifProjectorReqd"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="M"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView5" />
+            android:orientation="horizontal"
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Mike:"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            >
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Projector:"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ifProjectorReqd"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/ifMikeReqd" />
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mike: "
+                android:textStyle="bold"
+                />
 
-        <TextView
-            android:id="@+id/ifProjectorReqd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/userWhoBooked"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="P"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/acceptButton" />
+            <TextView
+                android:id="@+id/ifMikeReqd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="M"
+                />
 
-        <Button
-            android:id="@+id/acceptButton"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/rejectButton"
-            android:text="Accepted"
-            android:textColor="#ca2b8c29"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/rejectButton" />
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="   Projector: "
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/ifProjectorReqd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="P"
+                />
 
-        <Button
-            android:id="@+id/rejectButton"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:text="Rejected"
-            android:textColor="#caff1b2a"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/tex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=","
+                />
 
-    </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/whatBooked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="wBook"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/ontext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="on "
+                android:layout_marginLeft="0dp"
+                />
+
+            <TextView
+                android:id="@+id/forBooked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="for"
+                android:textStyle="bold"
+                />
+
+
+            <TextView
+                android:id="@+id/userReqdslot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slot"
+                android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/acceptButton"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Accept"
+                android:textColor="#ca2b8c29"
+                />
+
+            <Button
+                android:id="@+id/rejectButton"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Reject"
+                android:textColor="#caff1b2a"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

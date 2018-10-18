@@ -24,9 +24,9 @@ public class AdminViewActivity extends AppCompatActivity {
     private RecyclerView mUserResponse;
     private DatabaseReference mDatabase;
 
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    Button signout;//, acceptBtn, rejectBtn;
+    private Button signout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -34,7 +34,6 @@ public class AdminViewActivity extends AppCompatActivity {
 
         mDatabase=FirebaseDatabase.getInstance().getReference().child("allBooking");
         setContentView(R.layout.activity_admin_view);
-//        setContentView(R.layout.blog_row);
         mDatabase.keepSynced(true);
         mUserResponse=(RecyclerView)findViewById(R.id.myRecyclerView);
         mUserResponse.setHasFixedSize(true);
@@ -92,6 +91,7 @@ public class AdminViewActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         FirebaseRecyclerAdapter<UserResponse,UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder>
                 (UserResponse.class,R.layout.blog_row, UserResponseViewHolder.class,mDatabase) {
+
             @Override
             protected void populateViewHolder(UserResponseViewHolder userViewHolder, UserResponse model, int position) {
                 userViewHolder.setReason(model.getReason());
@@ -101,7 +101,7 @@ public class AdminViewActivity extends AppCompatActivity {
                 userViewHolder.setUser(model.getUserName());
                 userViewHolder.setNumber(model.getWhatBooked());
                 userViewHolder.setStatus(model.getStatus());
-//                userViewHolder.
+                userViewHolder.setuNextDate(model.getuNextDate());
             }
         };
 
@@ -111,18 +111,27 @@ public class AdminViewActivity extends AppCompatActivity {
 
     public static class UserResponseViewHolder extends RecyclerView.ViewHolder {
         View mView;
-        Button acceptBtn;
+        private Button acceptBtn, rejectBtn;
 
         public UserResponseViewHolder(View responseView)
         {
             super(responseView);
             mView=itemView;
             this.acceptBtn =(Button)responseView.findViewById(R.id.acceptButton);
+            this.rejectBtn = (Button)responseView.findViewById(R.id.rejectButton);
+
             acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Toast.makeText(AdminViewActivity.this,"Kaam kr raha hai",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(itemView.getContext(),"Kaam kr raha hai",Toast.LENGTH_SHORT).show();
 
+                }
+            });
+
+            rejectBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(itemView.getContext(),"Reject bhi ho raha h",Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -148,12 +157,17 @@ public class AdminViewActivity extends AppCompatActivity {
             mike_.setText(String.valueOf(mike));
         }
         public void setStatus(String status){
-            TextView status_ = (TextView)itemView.findViewById(R.id.ifMikeReqd);
+            //TextView status_ = (TextView)itemView.findViewById(R.id.ifMikeReqd);
             //status_.setText(String.valueOf(status));
         }
         public void setNumber(String number ){
             TextView  number_= (TextView)itemView.findViewById(R.id.whatBooked);
             number_.setText(String.valueOf(number));
+        }
+
+        public void setuNextDate(String date2){
+            TextView date = (TextView)itemView.findViewById(R.id.forBooked);
+            date.setText(String.valueOf(date2));
         }
     }
 
