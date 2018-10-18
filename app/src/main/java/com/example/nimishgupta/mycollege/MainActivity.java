@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,7 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     EditText getEmail, getPwd;
-    Button signButton, msignup;
+    Button signButton;
+    TextView msignup;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private SharedPreferences sharedPreferences;
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         getEmail = (EditText) findViewById(R.id.email);
         getPwd = (EditText) findViewById(R.id.password);
         signButton = (Button) findViewById(R.id.loginButton);
-        msignup = (Button)findViewById(R.id.signupBtn);
+        msignup = (TextView) findViewById(R.id.signupBtn);
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(MainActivity.this);
 
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,SignUp.class));
+                finish();
             }
         });
     }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,16 +23,27 @@ public class SignUp extends AppCompatActivity {
     private FirebaseAuth mfirebaseAuth;
     private EditText email, pwd, cnfpwd;
     private ProgressDialog progressDialog;
+    private TextView signinTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         msignupBtn = (Button)findViewById(R.id.submitButtonsignup);
         email = (EditText)findViewById(R.id.signupEmail);
+        signinTextView = (TextView) findViewById(R.id.clicksignin);
         pwd = (EditText)findViewById(R.id.signupPwd);
         cnfpwd = (EditText)findViewById(R.id.signcnfpwd);
         mfirebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(SignUp.this);
+
+        signinTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignUp.this,MainActivity.class));
+                finish();
+            }
+        });
+
 
         msignupBtn.setOnClickListener(new View.OnClickListener() {
             @Override

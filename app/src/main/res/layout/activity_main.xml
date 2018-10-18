@@ -6,34 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        android:layout_marginTop="24dp"
+        android:text="Enter details:"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:radius="20dp"
-        android:padding="10dp"
-        android:background="@drawable/rounded"
-        android:layout_marginEnd="10dp"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/rounded"
         android:hint="@string/email_hint"
         android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:radius="20dp"
         android:textColor="#000000" />
 
-    <Button
-        android:id="@+id/signupBtn"
-        android:layout_width="200dp"
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="97dp"
-        android:layout_marginEnd="-67dp"
-        android:layout_marginBottom="148dp"
-        android:textSize="20sp"
-        android:text="Sign Up"
-        android:textAllCaps="false" />
+        android:layout_marginStart="47dp"
+        android:layout_marginBottom="147dp"
+        android:text="Not Registered?"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/signupBtn"
+        android:layout_width="82dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="95dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="146dp"
+        android:layout_toEndOf="@+id/text"
+        android:clickable="true"
+        android:text="Register here"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary" />
 
     <EditText
         android:id="@+id/password"
@@ -41,26 +67,27 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/email"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="23dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="11dp"
+        android:background="@drawable/rounded"
         android:hint="@string/pwd_hint"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:inputType="textPassword"
         android:padding="10dp"
-        android:background="@drawable/rounded"
         android:textColor="#000000" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="191dp"
+        android:layout_marginTop="25dp"
         android:padding="15dp"
-        android:textSize="20sp"
         android:text="@string/signinButton"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textView2"

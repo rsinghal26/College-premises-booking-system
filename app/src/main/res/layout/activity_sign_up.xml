@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:layout_gravity="center"
     android:orientation="vertical">
 
@@ -14,9 +13,8 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:padding="8dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:text="Enter required Details" />
-
 
     <EditText
         android:id="@+id/signupEmail"
@@ -24,6 +22,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Enter Email"
+        android:background="@drawable/rounded"
+        android:padding="10dp"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -31,7 +31,9 @@
         android:hint="Enter Password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded"
+        android:padding="10dp"
         android:ems="10"
         android:inputType="textPassword" />
 
@@ -40,7 +42,9 @@
         android:hint="Confirm Password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPassword" />
 
@@ -52,5 +56,26 @@
         android:layout_gravity="center"
         android:text="Submit"
         android:textAlignment="center" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/already"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already a user?"
+            android:layout_marginRight="10dp"/>
+        <TextView
+            android:id="@+id/clicksignin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Signin"
+            android:textColor="@color/colorPrimary"
+            android:clickable="true"/>
+    </LinearLayout>
+
 
 </LinearLayout>
