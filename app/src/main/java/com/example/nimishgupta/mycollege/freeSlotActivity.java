@@ -260,10 +260,10 @@ public class freeSlotActivity extends AppCompatActivity {
                             final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("allBooking");
 
                             rootRef.setValue("NA");
-                            String id = firebaseUserResponse.push().getKey();
+                            String id = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);
                             if (mikeCBox.isChecked()) mikeReqd = 1;
                             if (projectorCBox.isChecked()) projectorReqd = 1;
-                            UserResponse userResponse = new UserResponse(mReason, newValue, userName, mikeReqd, projectorReqd,labNumber ,statusOfBooking,dateToStr,timeToStr,nextDateStr);
+                            UserResponse userResponse = new UserResponse(mReason, newValue, userName, mikeReqd, projectorReqd,labNumber ,statusOfBooking,dateToStr,timeToStr,nextDateStr,labSlot);
                             firebaseUserResponse.child(id).setValue(userResponse);
                             firebaseUserResponseForAdmin.child(id).setValue(userResponse);
                             Toast.makeText(freeSlotActivity.this, newValue + " slot is booked", Toast.LENGTH_LONG).show();
@@ -280,10 +280,10 @@ public class freeSlotActivity extends AppCompatActivity {
                             final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("allBooking");
 
                             rootRef.setValue("NA");
-                            String id = firebaseUserResponse.push().getKey();
+                            String id = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);//firebaseUserResponse.push().getKey();
                             if (mikeCBox.isChecked()) mikeReqd = 1;
                             if (projectorCBox.isChecked()) projectorReqd = 1;
-                            UserResponse userResponse = new UserResponse(mReason, newValue, userName, mikeReqd, projectorReqd, ltno, statusOfBooking,dateToStr,timeToStr,nextDateStr);
+                            UserResponse userResponse = new UserResponse(mReason, newValue, userName, mikeReqd, projectorReqd, ltno, statusOfBooking,dateToStr,timeToStr,nextDateStr,ltSlot);
                             firebaseUserResponse.child(id).setValue(userResponse);
                             firebaseUserResponseForAdmin.child(id).setValue(userResponse);
                             Toast.makeText(freeSlotActivity.this, newValue + " slot is booked", Toast.LENGTH_LONG).show();
