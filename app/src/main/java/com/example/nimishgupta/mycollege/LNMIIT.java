@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.firebase.client.Firebase;
 
-public class MyCollege extends Application {
+public class LNMIIT extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

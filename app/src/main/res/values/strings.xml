@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">MyCollege</string>
+    <string name="app_name">LNMIIT</string>
 
     <!--Login Activity-->
     <string name="email_hint">E-mail</string>
     <string name="pwd_hint">Password</string>
-    <string name="signinButton">Sign- In</string>
+    <string name="signinButton">LOG IN</string>
+    <string name="signupButton">SIGN UP</string>
 
     <!--Bottom Navigation Activity-->
     <string name="title_LT">LT\'s</string>
