@@ -9,6 +9,8 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,11 +28,8 @@ public class AdminViewActivity extends AppCompatActivity {
 
     private RecyclerView mUserResponse;
     private DatabaseReference mDatabase;
-
-    private ProgressBar progressBar;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private Button signout;
-    //private String var;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -42,19 +41,34 @@ public class AdminViewActivity extends AppCompatActivity {
         mUserResponse=(RecyclerView)findViewById(R.id.myRecyclerView);
         mUserResponse.setHasFixedSize(true);
         mUserResponse.setLayoutManager(new LinearLayoutManager(this));
-        signout = (Button)findViewById(R.id.adminSignout);
-        progressBar = (ProgressBar)findViewById(R.id.adminSignoutProgressBar);
         setupFirebaseListener();
-        signout.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
+    }
+    public void AdminSignout(){
                 Log.d("onClick","Signing out");
                 FirebaseAuth.getInstance().signOut();
-            }
-        });
     }
+
+
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        getMenuInflater().inflate(R.menu.menu_admin,menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        int id = menuItem.getItemId();
+        switch (id){
+            case R.id.signout:
+                AdminSignout();
+                break;
+            case R.id.feedback:
+                Toast.makeText(AdminViewActivity.this,"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return true;
+    }
+
 
     private void setupFirebaseListener(){
         Log.d("setup firebase listener","setting up auth state listener");
@@ -68,9 +82,7 @@ public class AdminViewActivity extends AppCompatActivity {
                 else {
                     Log.d("onAuthStateChanged","signed out");
                     Toast.makeText(AdminViewActivity.this, "Siging out", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(AdminViewActivity.this,MainActivity.class);
-                    progressBar.setVisibility(View.INVISIBLE);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
@@ -230,6 +242,4 @@ public class AdminViewActivity extends AppCompatActivity {
             daySlot = dayTime;
         }
     }
-
-
 }
