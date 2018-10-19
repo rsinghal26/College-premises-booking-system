@@ -24,8 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="User Name"
-             />
+            android:text="User Name" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -37,8 +36,7 @@
             android:id="@+id/reasonReqdForBooking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reason of booking"
-             />
+            android:text="Reason of booking" />
 
         <View
             android:layout_width="match_parent"
@@ -46,48 +44,42 @@
             android:background="@android:color/darker_gray"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mike: "
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/ifMikeReqd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="M"
-                />
+                android:text="M" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="   Projector: "
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/ifProjectorReqd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="P"
-                />
+                android:text="P" />
 
             <TextView
                 android:id="@+id/tex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=","
-                />
+                android:text="," />
 
             <TextView
                 android:id="@+id/whatBooked"
@@ -102,17 +94,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="on "
-                android:layout_marginLeft="0dp"
-                />
+                android:layout_marginLeft="0dp" />
 
             <TextView
                 android:id="@+id/forBooked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="for"
-                android:textStyle="bold"
-                />
-
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/userReqdslot"
@@ -144,8 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:text="Accept"
-                android:textColor="#ca2b8c29"
-                />
+                android:textColor="#ca2b8c29" />
 
             <Button
                 android:id="@+id/rejectButton"

@@ -55,6 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Submit"
+        android:background="@drawable/button_round"
+        android:textColor="#ffffff"
         android:textAlignment="center" />
 
 </LinearLayout>

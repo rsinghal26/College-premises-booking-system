@@ -28,6 +28,12 @@
 
     </Spinner>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/spinner_toChooseLabNo"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/darker_gray" />
     <TextView
         android:id="@+id/lab_timeSlot"
         android:layout_width="fill_parent"
@@ -47,13 +53,24 @@
         android:layout_marginTop="209dp">
     </Spinner>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/spinner_toChooseTimeSlotofLab"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/darker_gray" />
+
     <Button
         android:id="@+id/searchButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="196dp"
-
-        android:text="Search" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="210dp"
+        android:background="@drawable/button_round"
+        android:text="Search"
+        android:textColor="#ffffff" />
 </RelativeLayout>

@@ -16,7 +16,7 @@
 
     <!--Lecture Fragment-->
     <string name="LTNumber">Choose LT Number</string>
-    <string name="time_slot">Choose your Time-Slot</string>
+    <string name="time_slot">Choose Your Day-Slot</string>
 
     <string-array name="lectureHallSize">
         <item>LT-1</item>
@@ -53,7 +53,7 @@
 
 
     <!--Developers Fragment-->
-    <string name="sign_out_button">Sign-out</string>
+    <string name="sign_out_button">SIGN OUT</string>
 
 
     <!--Free slot activity-->

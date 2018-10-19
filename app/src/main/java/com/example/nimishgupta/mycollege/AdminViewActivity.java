@@ -93,7 +93,6 @@ public class AdminViewActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         FirebaseRecyclerAdapter<UserResponse,UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder>
                 (UserResponse.class,R.layout.blog_row, UserResponseViewHolder.class,mDatabase) {
-
             @Override
             protected void populateViewHolder(UserResponseViewHolder userViewHolder, UserResponse model, int position) {
                 userViewHolder.setReason(model.getReason());
@@ -107,9 +106,9 @@ public class AdminViewActivity extends AppCompatActivity {
                 userViewHolder.setuDate(model.getuDate());
                 userViewHolder.setuTime(model.getuTime());
                 userViewHolder.setDaySlot(model.getDaySlot());
+                
             }
         };
-
         mUserResponse.setAdapter(firebaseRecyclerAdapter);
     }
 
@@ -119,6 +118,7 @@ public class AdminViewActivity extends AppCompatActivity {
         private Button acceptBtn, rejectBtn;
         private String bookingStatus,userName,dateToStr,timeToStr,whatYoyBooked, uSlot, roomType,daySlot;
         Encryption encryption = new Encryption();
+
         public UserResponseViewHolder(View responseView)
         {
             super(responseView);
@@ -126,6 +126,11 @@ public class AdminViewActivity extends AppCompatActivity {
             this.acceptBtn =(Button)responseView.findViewById(R.id.acceptButton);
             this.rejectBtn = (Button)responseView.findViewById(R.id.rejectButton);
             final LinearLayout card = (LinearLayout)responseView.findViewById(R.id.cardLayout);
+
+//            if(bookingStatus.equals("Accepted")){
+//                card.setBackgroundColor(Color.parseColor("#80ff80"));
+//            }
+
             acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -137,8 +142,9 @@ public class AdminViewActivity extends AppCompatActivity {
                     firebaseUserResponseForAdmin.child(id).child("status").setValue("Accepted");
                     firebaseUserResponse.child(id).child("status").setValue("Accepted");
                     //rootRef.setValue("A");
-                    acceptBtn.setEnabled(false);
+
                     rejectBtn.setEnabled(false);
+                    acceptBtn.setVisibility(View.GONE);
                     card.setBackgroundColor(Color.parseColor("#80ff80"));
                     Toast.makeText(itemView.getContext(),"Accepted",Toast.LENGTH_SHORT).show();
                 }
@@ -156,7 +162,7 @@ public class AdminViewActivity extends AppCompatActivity {
                     firebaseUserResponse.child(id).child("status").setValue("Rejected");
                     rootRef.setValue("A");
                     rejectBtn.setEnabled(false);
-                    acceptBtn.setEnabled(false);
+                    rejectBtn.setVisibility(View.GONE);
                     card.setBackgroundColor(Color.parseColor("#ff9999"));
                     Toast.makeText(itemView.getContext(),"Rejected",Toast.LENGTH_SHORT).show();
 
@@ -168,27 +174,34 @@ public class AdminViewActivity extends AppCompatActivity {
             TextView reasonReqdForBooking = (TextView)itemView.findViewById(R.id.reasonReqdForBooking);
             reasonReqdForBooking.setText(reason);
         }
+
         public void setUser(String user){
             userName = user;
             TextView userWhoBooked = (TextView)itemView.findViewById(R.id.userWhoBooked);
             userWhoBooked.setText(user);
         }
+
         public void setSlot(String slot){
             uSlot = slot;
             TextView slotBooked = (TextView)itemView.findViewById(R.id.userReqdslot);
             slotBooked.setText(slot);
         }
+
         public void setProjector(int projector){
             TextView projector_ = (TextView)itemView.findViewById(R.id.ifProjectorReqd);
             projector_.setText(String.valueOf(projector));
         }
+
         public void setMike(int mike){
             TextView mike_ = (TextView)itemView.findViewById(R.id.ifMikeReqd);
             mike_.setText(String.valueOf(mike));
         }
+
         public void setStatus(String status){
             bookingStatus = status;
+            //card.setBackgroundColor(Color.parseColor("#80ff80"));
         }
+
         public void setNumber(String number ){
             whatYoyBooked = number;
             if(number.substring(0,3).equals("Lab")){
@@ -199,16 +212,20 @@ public class AdminViewActivity extends AppCompatActivity {
             TextView  number_= (TextView)itemView.findViewById(R.id.whatBooked);
             number_.setText(String.valueOf(number));
         }
+
         public void setuDate(String date1){
             dateToStr = date1;
         }
+
         public void setuTime(String time1){
             timeToStr = time1;
         }
+
         public void setuNextDate(String date2){
             TextView date = (TextView)itemView.findViewById(R.id.forBooked);
             date.setText(String.valueOf(date2));
         }
+
         public  void setDaySlot(String dayTime){
             daySlot = dayTime;
         }

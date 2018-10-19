@@ -21,12 +21,16 @@
 
     <Button
         android:id="@+id/signoutbuttonid"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="65dp"
+        android:layout_marginBottom="75dp"
         android:text="@string/sign_out_button"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/button_round"
         android:textAllCaps="false" />
 
     <ProgressBar
