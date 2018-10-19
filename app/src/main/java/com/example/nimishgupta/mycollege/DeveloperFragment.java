@@ -55,10 +55,6 @@ public class DeveloperFragment extends Fragment {
         mUserSide.setLayoutManager(new LinearLayoutManager(getContext()));
         setupFirebaseListener();
 
-
-
-
-
         mSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,24 +96,20 @@ public class DeveloperFragment extends Fragment {
                 (UserResponse.class,R.layout.blog_user, DeveloperFragment.UserResponseViewHolder.class,mDatabase) {
             @Override
             protected void populateViewHolder(DeveloperFragment.UserResponseViewHolder userViewHolder, UserResponse model, int position) {
-//                if(model.getUserName().equals(userName)){
-                    userViewHolder.setReason(model.getReason());
-                    userViewHolder.setSlot(model.getSlotChoosen());
-                    userViewHolder.setMike(model.getMike());
-                    userViewHolder.setProjector(model.getProjector());
-                    userViewHolder.setNumber(model.getWhatBooked());
-                    userViewHolder.setStatus(model.getStatus());
-                    userViewHolder.setuDate(model.getuDate());
-                    userViewHolder.setuTime(model.getuTime());
-                    userViewHolder.setuNextDate(model.getuNextDate());
-//                }
+                userViewHolder.setReason(model.getReason());
+                userViewHolder.setSlot(model.getSlotChoosen());
+                userViewHolder.setMike(model.getMike());
+                userViewHolder.setProjector(model.getProjector());
+                userViewHolder.setNumber(model.getWhatBooked());
+                userViewHolder.setStatus(model.getStatus());
+                userViewHolder.setuDate(model.getuDate());
+                userViewHolder.setuTime(model.getuTime());
+                userViewHolder.setuNextDate(model.getuNextDate());
             }
         };
 
         mUserSide.setAdapter(firebaseRecyclerAdapter);
     }
-
-
 
     @Override
     public void onStop() {
@@ -126,8 +118,6 @@ public class DeveloperFragment extends Fragment {
             FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
         }
     }
-
-
 
     public static class UserResponseViewHolder extends RecyclerView.ViewHolder
     {
@@ -142,10 +132,6 @@ public class DeveloperFragment extends Fragment {
             TextView reasonReqdForBooking = (TextView)itemView.findViewById(R.id.reasonReqdForBooking);
             reasonReqdForBooking.setText(reason);
         }
-//        public void setUser(String user){
-//            TextView userWhoBooked = (TextView)itemView.findViewById(R.id.userWhoBooked);
-//            userWhoBooked.setText(user);
-//        }
         public void setSlot(String slot){
             TextView slotBooked = (TextView)itemView.findViewById(R.id.userReqdslot);
             slotBooked.setText(slot);

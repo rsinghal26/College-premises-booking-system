@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,8 +47,23 @@ public class AdminViewActivity extends AppCompatActivity {
     }
 
 
-    public boolean onCreateOptionsMenu(Menu menu){
 
+    public void AcceptedSlots(){
+        Toast.makeText(AdminViewActivity.this,"Accepted Slots",Toast.LENGTH_SHORT).show();
+    }
+    public void RejectedSlots(){
+        Toast.makeText(AdminViewActivity.this,"Rejected Slots",Toast.LENGTH_SHORT).show();
+
+    }
+    public void PendingSlots(){
+        Toast.makeText(AdminViewActivity.this,"Pending Slots",Toast.LENGTH_SHORT).show();
+
+    }
+    public void Feedback(){
+        Toast.makeText(AdminViewActivity.this,"Coming soon",Toast.LENGTH_SHORT).show();
+
+    }
+    public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_admin,menu);
         return true;
     }
@@ -62,7 +75,16 @@ public class AdminViewActivity extends AppCompatActivity {
                 AdminSignout();
                 break;
             case R.id.feedback:
-                Toast.makeText(AdminViewActivity.this,"Coming Soon",Toast.LENGTH_SHORT).show();
+                Feedback();
+                break;
+            case R.id.pending:
+                PendingSlots();
+                break;
+            case R.id.acceped:
+                AcceptedSlots();
+                break;
+            case R.id.rejected:
+                RejectedSlots();
                 break;
         }
 
@@ -139,10 +161,6 @@ public class AdminViewActivity extends AppCompatActivity {
             this.rejectBtn = (Button)responseView.findViewById(R.id.rejectButton);
             final LinearLayout card = (LinearLayout)responseView.findViewById(R.id.cardLayout);
 
-//            if(bookingStatus.equals("Accepted")){
-//                card.setBackgroundColor(Color.parseColor("#80ff80"));
-//            }
-
             acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -153,7 +171,6 @@ public class AdminViewActivity extends AppCompatActivity {
                     String id = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);
                     firebaseUserResponseForAdmin.child(id).child("status").setValue("Accepted");
                     firebaseUserResponse.child(id).child("status").setValue("Accepted");
-                    //rootRef.setValue("A");
 
                     rejectBtn.setEnabled(false);
                     acceptBtn.setVisibility(View.GONE);

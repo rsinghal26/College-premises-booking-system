@@ -29,7 +29,6 @@
         <activity android:name=".freeSlotActivity" />
         <activity android:name=".AdminViewActivity" />
         <activity android:name=".SignUp" />
-
     </application>
 
 </manifest>
