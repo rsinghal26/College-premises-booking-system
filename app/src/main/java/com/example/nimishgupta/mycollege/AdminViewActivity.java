@@ -1,7 +1,11 @@
 package com.example.nimishgupta.mycollege;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +34,28 @@ public class AdminViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_view);
+        setContentView(R.layout.activity_admin_pending_view);
+
+        if(isOnline()) {
+        }
+        else{
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(AdminViewActivity.this).create();
+
+                alertDialog.setTitle("Warning!!");
+                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again.");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+                alertDialog.show();
+            } catch (Exception e) {
+//                Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
+            }
+        }
 
         mDatabase=FirebaseDatabase.getInstance().getReference().child("PendingRequests");
         mDatabase.keepSynced(true);
@@ -39,6 +63,17 @@ public class AdminViewActivity extends AppCompatActivity {
         mUserResponse.setHasFixedSize(true);
         mUserResponse.setLayoutManager(new LinearLayoutManager(this));
         setupFirebaseListener();
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            Toast.makeText(AdminViewActivity.this, "No Internet connection!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     // ================= Top right corner menu code======================
@@ -53,10 +88,6 @@ public class AdminViewActivity extends AppCompatActivity {
     public void RejectedSlots(){
         startActivity(new Intent(AdminViewActivity.this,AdminRejectRequest.class));
         //Toast.makeText(AdminViewActivity.this,"Rejected Slots",Toast.LENGTH_SHORT).show();
-
-    }
-    public void PendingSlots(){
-        Toast.makeText(AdminViewActivity.this,"Pending Slots",Toast.LENGTH_SHORT).show();
 
     }
     public void Feedback(){
@@ -76,9 +107,6 @@ public class AdminViewActivity extends AppCompatActivity {
             case R.id.feedback:
                 Feedback();
                 break;
-            case R.id.pending:
-                PendingSlots();
-                break;
             case R.id.acceped:
                 AcceptedSlots();
                 break;
@@ -90,6 +118,7 @@ public class AdminViewActivity extends AppCompatActivity {
         return true;
     }
 
+    //=================== check for online=====================
 
     private void setupFirebaseListener(){
         Log.d("setup firebase listener","setting up auth state listener");
@@ -119,13 +148,12 @@ public class AdminViewActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         FirebaseRecyclerAdapter<UserResponse,UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder>
-                (UserResponse.class,R.layout.blog_row, UserResponseViewHolder.class,mDatabase) {
+                (UserResponse.class,R.layout.pending_card, UserResponseViewHolder.class,mDatabase) {
             @Override
             protected void populateViewHolder(UserResponseViewHolder userViewHolder, UserResponse model, int position) {
                 userViewHolder.setReason(model.getReason());
@@ -159,6 +187,9 @@ public class AdminViewActivity extends AppCompatActivity {
             mView=itemView;
             this.acceptBtn =(Button)responseView.findViewById(R.id.acceptButton);
             this.rejectBtn = (Button)responseView.findViewById(R.id.rejectButton);
+
+            //Toast.makeText(itemView.getContext(),"KAAM KR RAHA HAI",Toast.LENGTH_SHORT).show();
+
 
             acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -269,3 +300,5 @@ public class AdminViewActivity extends AppCompatActivity {
         }
     }
 }
+
+

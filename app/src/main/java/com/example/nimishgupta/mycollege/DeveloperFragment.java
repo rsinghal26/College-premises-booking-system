@@ -1,8 +1,15 @@
 package com.example.nimishgupta.mycollege;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +40,7 @@ public class DeveloperFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     ProgressBar progressBar;
     Encryption encryption = new Encryption();
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,41 @@ public class DeveloperFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if(isOnline()) {
+
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setMessage("Fetching Data...");
+            progressDialog.show();
+            Runnable progressRunnable = new Runnable() {
+
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                }
+            };
+            Handler pdCanceller = new Handler();
+            pdCanceller.postDelayed(progressRunnable, 3000);
+        }
+        else{
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+
+                alertDialog.setTitle("Warning!!");
+                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again.");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                alertDialog.show();
+            } catch (Exception e) {
+//                Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
+            }
+        }
+
         // Inflate the layout for this fragment
         SharedPreferences sp = getContext().getSharedPreferences("com.example.nimishgupta.mycollege",MODE_PRIVATE);
         String userName = sp.getString("userID","default");
@@ -62,7 +105,19 @@ public class DeveloperFragment extends Fragment {
                 FirebaseAuth.getInstance().signOut();
             }
         });
+
         return view;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     private void setupFirebaseListener(){
@@ -93,7 +148,7 @@ public class DeveloperFragment extends Fragment {
         final String userName = sp.getString("userID","default");
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         FirebaseRecyclerAdapter<UserResponse,DeveloperFragment.UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder>
-                (UserResponse.class,R.layout.blog_user, DeveloperFragment.UserResponseViewHolder.class,mDatabase) {
+                (UserResponse.class,R.layout.user_side_card, DeveloperFragment.UserResponseViewHolder.class,mDatabase) {
             @Override
             protected void populateViewHolder(DeveloperFragment.UserResponseViewHolder userViewHolder, UserResponse model, int position) {
                 userViewHolder.setReason(model.getReason());
@@ -107,8 +162,8 @@ public class DeveloperFragment extends Fragment {
                 userViewHolder.setuNextDate(model.getuNextDate());
             }
         };
-
         mUserSide.setAdapter(firebaseRecyclerAdapter);
+
     }
 
     @Override
@@ -126,6 +181,7 @@ public class DeveloperFragment extends Fragment {
         {
             super(responseView);
             mView=itemView;
+
         }
 
         public void setReason(String reason){

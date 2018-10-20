@@ -48,11 +48,33 @@ public class freeSlotActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     String labNumber,labSlot, ltno, ltSlot;
     Encryption encryption = new Encryption();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free_slot);
         mListView = (ListView)findViewById(R.id.listiew);
+
+        if(isOnline()) {
+        }
+        else{
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(freeSlotActivity.this).create();
+
+                alertDialog.setTitle("Warning!!");
+                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again.");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+                alertDialog.show();
+            } catch (Exception e) {
+//                Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
+            }
+        }
 
         //List adapter------------------------------------------------------------
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,infoKeys){
@@ -87,28 +109,6 @@ public class freeSlotActivity extends AppCompatActivity {
             }
         });
 
-
-
-        if(isOnline()) {
-        }
-        else{
-            try {
-                AlertDialog alertDialog = new AlertDialog.Builder(freeSlotActivity.this).create();
-
-                alertDialog.setTitle("Warning!!");
-                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again.");
-                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-                alertDialog.show();
-            } catch (Exception e) {
-//                Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
-            }
-        }
 
         if(getIntent().hasExtra("type")){
 
