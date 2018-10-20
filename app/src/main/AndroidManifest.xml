@@ -29,6 +29,8 @@
         <activity android:name=".freeSlotActivity" />
         <activity android:name=".AdminViewActivity" />
         <activity android:name=".SignUp" />
+        <activity android:name=".AdminAcceptRequest" />
+        <activity android:name=".AdminRejectRequest"></activity>
     </application>
 
 </manifest>

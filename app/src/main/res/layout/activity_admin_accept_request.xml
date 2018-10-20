@@ -15,7 +15,7 @@
         android:id="@+id/cardLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f2ecec"
+        android:background="#99ff99"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -127,16 +127,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/acceptButton"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:background="@drawable/button_round"
-                android:backgroundTint="#ca2b8c29"
-                android:text="Accept"
-                android:layout_marginRight="2dp"
-                android:textColor="#ffffff" />
 
             <Button
                 android:id="@+id/rejectButton"

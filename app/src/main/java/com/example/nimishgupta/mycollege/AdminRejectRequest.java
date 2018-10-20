@@ -1,18 +1,14 @@
 package com.example.nimishgupta.mycollege;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AdminViewActivity extends AppCompatActivity {
+public class AdminRejectRequest extends AppCompatActivity {
 
     private RecyclerView mUserResponse;
     private DatabaseReference mDatabase;
@@ -33,61 +29,12 @@ public class AdminViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_view);
 
-        mDatabase=FirebaseDatabase.getInstance().getReference().child("PendingRequests");
+        mDatabase=FirebaseDatabase.getInstance().getReference().child("RejectRequests");
         mDatabase.keepSynced(true);
         mUserResponse=(RecyclerView)findViewById(R.id.myRecyclerView);
         mUserResponse.setHasFixedSize(true);
         mUserResponse.setLayoutManager(new LinearLayoutManager(this));
         setupFirebaseListener();
-    }
-
-    // ================= Top right corner menu code======================
-    public void AdminSignout(){
-        Log.d("onClick","Signing out");
-        FirebaseAuth.getInstance().signOut();
-    }
-    public void AcceptedSlots(){
-        startActivity(new Intent(AdminViewActivity.this,AdminAcceptRequest.class));
-        //Toast.makeText(AdminViewActivity.this,"Accepted Slots",Toast.LENGTH_SHORT).show();
-    }
-    public void RejectedSlots(){
-        startActivity(new Intent(AdminViewActivity.this,AdminRejectRequest.class));
-        //Toast.makeText(AdminViewActivity.this,"Rejected Slots",Toast.LENGTH_SHORT).show();
-
-    }
-    public void PendingSlots(){
-        Toast.makeText(AdminViewActivity.this,"Pending Slots",Toast.LENGTH_SHORT).show();
-
-    }
-    public void Feedback(){
-        Toast.makeText(AdminViewActivity.this,"Coming soon",Toast.LENGTH_SHORT).show();
-
-    }
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_admin,menu);
-        return true;
-    }
-    public boolean onOptionsItemSelected(MenuItem menuItem){
-        int id = menuItem.getItemId();
-        switch (id){
-            case R.id.signout:
-                AdminSignout();
-                break;
-            case R.id.feedback:
-                Feedback();
-                break;
-            case R.id.pending:
-                PendingSlots();
-                break;
-            case R.id.acceped:
-                AcceptedSlots();
-                break;
-            case R.id.rejected:
-                RejectedSlots();
-                break;
-        }
-
-        return true;
     }
 
 
@@ -102,8 +49,8 @@ public class AdminViewActivity extends AppCompatActivity {
                 }
                 else {
                     Log.d("onAuthStateChanged","signed out");
-                    Toast.makeText(AdminViewActivity.this, "Siging out", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AdminViewActivity.this,MainActivity.class);
+                    Toast.makeText(AdminRejectRequest.this, "Siging out", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(AdminRejectRequest.this,MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
@@ -124,10 +71,10 @@ public class AdminViewActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
-        FirebaseRecyclerAdapter<UserResponse,UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder>
-                (UserResponse.class,R.layout.blog_row, UserResponseViewHolder.class,mDatabase) {
+        FirebaseRecyclerAdapter<UserResponse,AdminRejectRequest.UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, AdminRejectRequest.UserResponseViewHolder>
+                (UserResponse.class,R.layout.activity_admin_reject_request, AdminRejectRequest.UserResponseViewHolder.class,mDatabase) {
             @Override
-            protected void populateViewHolder(UserResponseViewHolder userViewHolder, UserResponse model, int position) {
+            protected void populateViewHolder(AdminRejectRequest.UserResponseViewHolder userViewHolder, UserResponse model, int position) {
                 userViewHolder.setReason(model.getReason());
                 userViewHolder.setSlot(model.getSlotChoosen());
                 userViewHolder.setMike(model.getMike());
@@ -139,7 +86,7 @@ public class AdminViewActivity extends AppCompatActivity {
                 userViewHolder.setuDate(model.getuDate());
                 userViewHolder.setuTime(model.getuTime());
                 userViewHolder.setDaySlot(model.getDaySlot());
-                
+
             }
         };
         mUserResponse.setAdapter(firebaseRecyclerAdapter);
@@ -149,7 +96,7 @@ public class AdminViewActivity extends AppCompatActivity {
     public static class UserResponseViewHolder extends RecyclerView.ViewHolder {
         View mView;
         private Button acceptBtn, rejectBtn;
-        private String mReason, slotchoosen,userName, dateToStr,timeToStr, roomType,daySlot, whatYoyBooked, nextDateStr;
+        private String mReason, slotchoosen,userName,dateToStr,timeToStr, roomType,daySlot, whatYoyBooked, nextDateStr;
         int projectorReqd, mikeReqd;
         Encryption encryption = new Encryption();
 
@@ -158,13 +105,12 @@ public class AdminViewActivity extends AppCompatActivity {
             super(responseView);
             mView=itemView;
             this.acceptBtn =(Button)responseView.findViewById(R.id.acceptButton);
-            this.rejectBtn = (Button)responseView.findViewById(R.id.rejectButton);
 
             acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
-                    final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("PendingRequests");
+                    final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("RejectRequests");
                     final DatabaseReference acceptRef = FirebaseDatabase.getInstance().getReference("AcceptRequests");
                     UserResponse userResponse = new UserResponse(mReason, slotchoosen, userName, mikeReqd, projectorReqd,whatYoyBooked ,"Accepted",dateToStr,timeToStr,nextDateStr,daySlot);
 
@@ -180,28 +126,6 @@ public class AdminViewActivity extends AppCompatActivity {
                 }
             });
 
-            rejectBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
-                    final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("PendingRequests");
-                    final DatabaseReference rejectRef = FirebaseDatabase.getInstance().getReference("RejectRequests");
-                    final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference(roomType).child(whatYoyBooked).child(daySlot).child(slotchoosen);
-                    UserResponse userResponse = new UserResponse(mReason, slotchoosen, userName, mikeReqd, projectorReqd,whatYoyBooked ,"Rejected",dateToStr,timeToStr,nextDateStr,daySlot);
-
-                    String id = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);
-                    firebaseUserResponse.child(id).child("status").setValue("Rejected");
-
-                    //==================cut and paste booking data fromm PandingRequest to RejectRequests================
-                    rejectRef.child(id).setValue(userResponse);
-                    firebaseUserResponseForAdmin.child(id).removeValue();
-                    rootRef.setValue("A");
-
-                    rejectBtn.setVisibility(View.GONE);
-                    Toast.makeText(itemView.getContext()," Request Rejected",Toast.LENGTH_SHORT).show();
-
-                }
-            });
         }
 
         public void setReason(String reason){

@@ -280,7 +280,7 @@ public class freeSlotActivity extends AppCompatActivity {
                             //Toast.makeText(freeSlotActivity.this,"share data "+userName,Toast.LENGTH_SHORT).show();
 
                             final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
-                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("allBooking");
+                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("PendingRequests");
 
                             rootRef.setValue("NA");
                             String id = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);
@@ -300,7 +300,7 @@ public class freeSlotActivity extends AppCompatActivity {
                         if (!TextUtils.isEmpty(newValue) && !TextUtils.isEmpty(mReason)) {
                             final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("LTs").child(ltno).child(ltSlot).child(newValue);
                             final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
-                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("allBooking");
+                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("PendingRequests");
 
                             rootRef.setValue("NA");
                             String id = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);//firebaseUserResponse.push().getKey();
