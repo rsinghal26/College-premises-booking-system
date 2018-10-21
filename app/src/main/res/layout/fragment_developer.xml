@@ -11,37 +11,12 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/myRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="520dp"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp">
 
     </android.support.v7.widget.RecyclerView>
-
-    <Button
-        android:id="@+id/signoutbuttonid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="75dp"
-        android:text="@string/sign_out_button"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:textColor="#ffffff"
-        android:background="@drawable/button_round"
-        android:textAllCaps="false" />
-
-    <ProgressBar
-        android:id="@+id/signoutProgressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/signoutbuttonid"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
-        android:visibility="invisible" />
-
 
 </RelativeLayout>

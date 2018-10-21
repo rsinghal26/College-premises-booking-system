@@ -30,8 +30,8 @@ import java.util.Date;
 
 public class AdminViewActivity extends AppCompatActivity {
 
-    private RecyclerView mUserResponse, mUserResponse2;
-    private DatabaseReference mDatabase, mDatabase2;
+    private RecyclerView mUserResponse;
+    private DatabaseReference mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     Date today = new Date();
@@ -41,7 +41,8 @@ public class AdminViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_pending_view);
+        setContentView(R.layout.activity_admin_view);
+        getSupportActionBar().setTitle("Pending Requests");
 
         if(isOnline()) {
         }
@@ -67,16 +68,9 @@ public class AdminViewActivity extends AppCompatActivity {
         mDatabase=FirebaseDatabase.getInstance().getReference().child("PendingRequests");
         mDatabase.keepSynced(true);
 
-//        mDatabase2=FirebaseDatabase.getInstance().getReference().child("AcceptRequests");
-//        mDatabase2.keepSynced(true);
-
         mUserResponse=(RecyclerView)findViewById(R.id.myRecyclerView);
         mUserResponse.setHasFixedSize(true);
         mUserResponse.setLayoutManager(new LinearLayoutManager(this));
-
-//        mUserResponse2=(RecyclerView)findViewById(R.id.myRecyclerView);
-//        mUserResponse2.setHasFixedSize(true);
-//        mUserResponse2.setLayoutManager(new LinearLayoutManager(this));
         setupFirebaseListener();
     }
 
@@ -102,11 +96,10 @@ public class AdminViewActivity extends AppCompatActivity {
     }
     public void RejectedSlots(){
         startActivity(new Intent(AdminViewActivity.this,AdminRejectRequest.class));
-        //Toast.makeText(AdminViewActivity.this,"Rejected Slots",Toast.LENGTH_SHORT).show();
 
     }
     public void Feedback(){
-        Toast.makeText(AdminViewActivity.this,"Coming soon",Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(AdminViewActivity.this,feedback.class));
 
     }
     public boolean onCreateOptionsMenu(Menu menu){
@@ -168,21 +161,6 @@ public class AdminViewActivity extends AppCompatActivity {
         super.onStart();
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
 
-//        FirebaseRecyclerAdapter<UserResponse,UserResponseViewHolder2> firebaseRecyclerAdapter2 = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder2>
-//                (UserResponse.class,R.layout.accept_card, UserResponseViewHolder2.class,mDatabase2) {
-//            @Override
-//            protected void populateViewHolder(UserResponseViewHolder2 userViewHolder, UserResponse model, int position) {
-//                if(!(model.getuDate().equals(newDateToStr))){
-//                    final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("LTs").child(model.getWhatBooked()).child(model.getDaySlot()).child(model.getSlotChoosen());
-//                    rootRef.setValue("A");
-//                    Toast.makeText(AdminViewActivity.this,newDateToStr,Toast.LENGTH_SHORT).show();
-//                }
-//                Toast.makeText(AdminViewActivity.this,"aaya",Toast.LENGTH_SHORT).show();
-//            }
-//        };
-//
-//        mUserResponse2.setAdapter(firebaseRecyclerAdapter2);
-
         FirebaseRecyclerAdapter<UserResponse,UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder>
                 (UserResponse.class,R.layout.pending_card, UserResponseViewHolder.class,mDatabase) {
             @Override
@@ -203,18 +181,6 @@ public class AdminViewActivity extends AppCompatActivity {
         };
         mUserResponse.setAdapter(firebaseRecyclerAdapter);
     }
-
-
-//    public static class UserResponseViewHolder2 extends RecyclerView.ViewHolder {
-//        View mView;
-//
-//        public UserResponseViewHolder2(View responseView)
-//        {
-//            super(responseView);
-//            mView=itemView;
-//        }
-//
-//    }
 
 
     public static class UserResponseViewHolder extends RecyclerView.ViewHolder {

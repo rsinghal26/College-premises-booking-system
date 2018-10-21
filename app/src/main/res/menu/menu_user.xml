@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.nimishgupta.mycollege.AdminActivity">
+
+    <item
+        android:id="@+id/feedback"
+        android:title="Feedback"
+        app:showAsAction="never"
+        android:orderInCategory="100" />
+    <item
+        android:id="@+id/signout"
+        android:orderInCategory="100"
+        android:title="SIGN OUT"
+        app:showAsAction="never" />
+
+</menu>

@@ -15,6 +15,8 @@ public class SACFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ((BottomNavigation) getActivity()).setActionBarTitle("SAC Booking");
+
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_sac, container, false);

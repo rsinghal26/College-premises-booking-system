@@ -30,7 +30,8 @@
         <activity android:name=".AdminViewActivity" />
         <activity android:name=".SignUp" />
         <activity android:name=".AdminAcceptRequest" />
-        <activity android:name=".AdminRejectRequest"></activity>
+        <activity android:name=".AdminRejectRequest" />
+        <activity android:name=".feedback"></activity>
     </application>
 
 </manifest>

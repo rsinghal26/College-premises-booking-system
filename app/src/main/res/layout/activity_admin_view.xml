@@ -8,7 +8,7 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pending Requests"
+        android:text="Booking Requests"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:textStyle="bold"

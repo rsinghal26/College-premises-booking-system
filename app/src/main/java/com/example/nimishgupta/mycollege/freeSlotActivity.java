@@ -54,6 +54,7 @@ public class freeSlotActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free_slot);
         mListView = (ListView)findViewById(R.id.listiew);
+        getSupportActionBar().setTitle("Availability");
 
         if(isOnline()) {
         }
@@ -105,7 +106,6 @@ public class freeSlotActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 showInputBox(infoKeys.get(position),position);
-//                progressDialog.dismiss();
             }
         });
 

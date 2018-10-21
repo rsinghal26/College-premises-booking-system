@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -18,11 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,11 +32,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class DeveloperFragment extends Fragment {
 
-    Button mSignOut;
     private RecyclerView mUserSide;
     private DatabaseReference mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    ProgressBar progressBar;
     Encryption encryption = new Encryption();
     private ProgressDialog progressDialog;
 
@@ -50,6 +46,8 @@ public class DeveloperFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((BottomNavigation) getActivity()).setActionBarTitle("Your Booking");
 
         if(isOnline()) {
 
@@ -91,20 +89,10 @@ public class DeveloperFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_developer, container, false);
         mDatabase=FirebaseDatabase.getInstance().getReference().child("UserResponses").child(encryption.md5(userName));
-        mSignOut = (Button)view.findViewById(R.id.signoutbuttonid);
-        progressBar = (ProgressBar)view.findViewById(R.id.signoutProgressBar);
         mUserSide=(RecyclerView)view.findViewById(R.id.myRecyclerView);
         mUserSide.setHasFixedSize(true);
         mUserSide.setLayoutManager(new LinearLayoutManager(getContext()));
         setupFirebaseListener();
-
-        mSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("onClick","Signing out");
-                FirebaseAuth.getInstance().signOut();
-            }
-        });
 
         return view;
     }
@@ -132,7 +120,6 @@ public class DeveloperFragment extends Fragment {
                 else {
                     Log.d("onAuthStateChanged","signed out");
                     Toast.makeText(getActivity(), "Siging out", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(getActivity(),MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
@@ -146,11 +133,15 @@ public class DeveloperFragment extends Fragment {
         super.onStart();
         SharedPreferences sp = this.getActivity().getSharedPreferences("com.example.nimishgupta.mycollege",MODE_PRIVATE);
         final String userName = sp.getString("userID","default");
+
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         FirebaseRecyclerAdapter<UserResponse,DeveloperFragment.UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder>
                 (UserResponse.class,R.layout.user_side_card, DeveloperFragment.UserResponseViewHolder.class,mDatabase) {
             @Override
             protected void populateViewHolder(DeveloperFragment.UserResponseViewHolder userViewHolder, UserResponse model, int position) {
+//                if(model.getStatus().equals("Rejected")){
+//                    getsome();
+//                }
                 userViewHolder.setReason(model.getReason());
                 userViewHolder.setSlot(model.getSlotChoosen());
                 userViewHolder.setMike(model.getMike());
@@ -202,6 +193,13 @@ public class DeveloperFragment extends Fragment {
         }
         public void setStatus(String status){
             TextView status_ = (TextView)itemView.findViewById(R.id.status);
+            if(status.equals("Rejected")){
+                status_.setTextColor(Color.parseColor("#e60000"));
+            }else if(status.equals("Accepted")){
+                status_.setTextColor(Color.parseColor("#33cc33"));
+            }else{
+                status_.setTextColor(Color.parseColor("#cccc00"));
+            }
             status_.setText(String.valueOf(status));
         }
         public void setNumber(String number ){
@@ -219,6 +217,10 @@ public class DeveloperFragment extends Fragment {
         public void setuNextDate(String date2){
             TextView date = (TextView)itemView.findViewById(R.id.forBooked);
             date.setText(String.valueOf(date2));
+        }
+        public TextView getsome(){
+            TextView sts = (TextView)itemView.findViewById(R.id.status);
+            return sts;
         }
     }
 }
