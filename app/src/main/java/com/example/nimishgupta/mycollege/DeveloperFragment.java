@@ -139,9 +139,7 @@ public class DeveloperFragment extends Fragment {
                 (UserResponse.class,R.layout.user_side_card, DeveloperFragment.UserResponseViewHolder.class,mDatabase) {
             @Override
             protected void populateViewHolder(DeveloperFragment.UserResponseViewHolder userViewHolder, UserResponse model, int position) {
-//                if(model.getStatus().equals("Rejected")){
-//                    getsome();
-//                }
+
                 userViewHolder.setReason(model.getReason());
                 userViewHolder.setSlot(model.getSlotChoosen());
                 userViewHolder.setMike(model.getMike());

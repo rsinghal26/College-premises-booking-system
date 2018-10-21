@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,6 +57,7 @@ public class freeSlotActivity extends AppCompatActivity {
         mListView = (ListView)findViewById(R.id.listiew);
         getSupportActionBar().setTitle("Availability");
 
+
         if(isOnline()) {
         }
         else{
@@ -75,6 +77,27 @@ public class freeSlotActivity extends AppCompatActivity {
             } catch (Exception e) {
 //                Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
             }
+            return;
+        }
+
+        if(!checkTimeIntervel()){
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(freeSlotActivity.this).create();
+
+                alertDialog.setTitle("Warning!!");
+                alertDialog.setMessage("Booking system can only available between 8:00 A.M. to 6:00 P.M.");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+                alertDialog.show();
+            } catch (Exception e) {
+//                Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
+            }
+            return;
         }
 
         //List adapter------------------------------------------------------------
@@ -226,6 +249,42 @@ public class freeSlotActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public boolean checkTimeIntervel() {
+
+        Date today = new Date();
+        SimpleDateFormat time = new SimpleDateFormat("kk:mm:ss");
+        String timeToString = time.format(today);
+        try {
+            String string1 = "8:00:00";
+            Date time1 = new SimpleDateFormat("HH:mm:ss").parse(string1);
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(time1);
+
+            String string2 = "18:00:00";
+            Date time2 = new SimpleDateFormat("HH:mm:ss").parse(string2);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(time2);
+            calendar2.add(Calendar.DATE, 1);
+
+            String someRandomTime = timeToString;
+
+            Date d = new SimpleDateFormat("HH:mm:ss").parse(someRandomTime);
+            Calendar calendar3 = Calendar.getInstance();
+            calendar3.setTime(d);
+            calendar3.add(Calendar.DATE, 1);
+
+            Date x = calendar3.getTime();
+            if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 //    For checking  Internet Connection...
