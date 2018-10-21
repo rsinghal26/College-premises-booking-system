@@ -25,11 +25,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AdminViewActivity extends AppCompatActivity {
 
-    private RecyclerView mUserResponse;
-    private DatabaseReference mDatabase;
+    private RecyclerView mUserResponse, mUserResponse2;
+    private DatabaseReference mDatabase, mDatabase2;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    Date today = new Date();
+    SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+    String newDateToStr = date.format(today);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +66,17 @@ public class AdminViewActivity extends AppCompatActivity {
 
         mDatabase=FirebaseDatabase.getInstance().getReference().child("PendingRequests");
         mDatabase.keepSynced(true);
+
+//        mDatabase2=FirebaseDatabase.getInstance().getReference().child("AcceptRequests");
+//        mDatabase2.keepSynced(true);
+
         mUserResponse=(RecyclerView)findViewById(R.id.myRecyclerView);
         mUserResponse.setHasFixedSize(true);
         mUserResponse.setLayoutManager(new LinearLayoutManager(this));
+
+//        mUserResponse2=(RecyclerView)findViewById(R.id.myRecyclerView);
+//        mUserResponse2.setHasFixedSize(true);
+//        mUserResponse2.setLayoutManager(new LinearLayoutManager(this));
         setupFirebaseListener();
     }
 
@@ -152,6 +167,22 @@ public class AdminViewActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
+
+//        FirebaseRecyclerAdapter<UserResponse,UserResponseViewHolder2> firebaseRecyclerAdapter2 = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder2>
+//                (UserResponse.class,R.layout.accept_card, UserResponseViewHolder2.class,mDatabase2) {
+//            @Override
+//            protected void populateViewHolder(UserResponseViewHolder2 userViewHolder, UserResponse model, int position) {
+//                if(!(model.getuDate().equals(newDateToStr))){
+//                    final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("LTs").child(model.getWhatBooked()).child(model.getDaySlot()).child(model.getSlotChoosen());
+//                    rootRef.setValue("A");
+//                    Toast.makeText(AdminViewActivity.this,newDateToStr,Toast.LENGTH_SHORT).show();
+//                }
+//                Toast.makeText(AdminViewActivity.this,"aaya",Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//
+//        mUserResponse2.setAdapter(firebaseRecyclerAdapter2);
+
         FirebaseRecyclerAdapter<UserResponse,UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder>
                 (UserResponse.class,R.layout.pending_card, UserResponseViewHolder.class,mDatabase) {
             @Override
@@ -174,6 +205,18 @@ public class AdminViewActivity extends AppCompatActivity {
     }
 
 
+//    public static class UserResponseViewHolder2 extends RecyclerView.ViewHolder {
+//        View mView;
+//
+//        public UserResponseViewHolder2(View responseView)
+//        {
+//            super(responseView);
+//            mView=itemView;
+//        }
+//
+//    }
+
+
     public static class UserResponseViewHolder extends RecyclerView.ViewHolder {
         View mView;
         private Button acceptBtn, rejectBtn;
@@ -194,43 +237,77 @@ public class AdminViewActivity extends AppCompatActivity {
             acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
-                    final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("PendingRequests");
-                    final DatabaseReference acceptRef = FirebaseDatabase.getInstance().getReference("AcceptRequests");
-                    UserResponse userResponse = new UserResponse(mReason, slotchoosen, userName, mikeReqd, projectorReqd,whatYoyBooked ,"Accepted",dateToStr,timeToStr,nextDateStr,daySlot);
 
-                    String id = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);
-                    firebaseUserResponse.child(id).child("status").setValue("Accepted");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
+                    builder.setTitle("Conformation");
+                    builder.setMessage("Are you sure you want to Accept this request?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
+                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("PendingRequests");
+                            final DatabaseReference acceptRef = FirebaseDatabase.getInstance().getReference("AcceptRequests");
+                            UserResponse userResponse = new UserResponse(mReason, slotchoosen, userName, mikeReqd, projectorReqd,whatYoyBooked ,"Accepted",dateToStr,timeToStr,nextDateStr,daySlot);
 
-                    //==================cut and paste booking data fromm PandingRequest to AcceptRequests================
-                    acceptRef.child(id).setValue(userResponse);
-                    firebaseUserResponseForAdmin.child(id).removeValue();
+                            String uid = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);
+                            firebaseUserResponse.child(uid).child("status").setValue("Accepted");
 
-                    acceptBtn.setVisibility(View.GONE);
-                    Toast.makeText(itemView.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+                            //==================cut and paste booking data fromm PandingRequest to AcceptRequests================
+                            acceptRef.child(uid).setValue(userResponse);
+                            firebaseUserResponseForAdmin.child(uid).removeValue();
+
+                            acceptBtn.setVisibility(View.GONE);
+                            Toast.makeText(itemView.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+//
                 }
             });
 
             rejectBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
-                    final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("PendingRequests");
-                    final DatabaseReference rejectRef = FirebaseDatabase.getInstance().getReference("RejectRequests");
-                    final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference(roomType).child(whatYoyBooked).child(daySlot).child(slotchoosen);
-                    UserResponse userResponse = new UserResponse(mReason, slotchoosen, userName, mikeReqd, projectorReqd,whatYoyBooked ,"Rejected",dateToStr,timeToStr,nextDateStr,daySlot);
 
-                    String id = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);
-                    firebaseUserResponse.child(id).child("status").setValue("Rejected");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
+                    builder.setTitle("Conformation");
+                    builder.setMessage("Are you sure you want to Reject this request?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
+                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("PendingRequests");
+                            final DatabaseReference rejectRef = FirebaseDatabase.getInstance().getReference("RejectRequests");
+                            final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference(roomType).child(whatYoyBooked).child(daySlot).child(slotchoosen);
+                            UserResponse userResponse = new UserResponse(mReason, slotchoosen, userName, mikeReqd, projectorReqd,whatYoyBooked ,"Rejected",dateToStr,timeToStr,nextDateStr,daySlot);
 
-                    //==================cut and paste booking data fromm PandingRequest to RejectRequests================
-                    rejectRef.child(id).setValue(userResponse);
-                    firebaseUserResponseForAdmin.child(id).removeValue();
-                    rootRef.setValue("A");
+                            String uid = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);
+                            firebaseUserResponse.child(uid).child("status").setValue("Rejected");
 
-                    rejectBtn.setVisibility(View.GONE);
-                    Toast.makeText(itemView.getContext()," Request Rejected",Toast.LENGTH_SHORT).show();
+                            //==================cut and paste booking data fromm PandingRequest to RejectRequests================
+                            rejectRef.child(uid).setValue(userResponse);
+                            firebaseUserResponseForAdmin.child(uid).removeValue();
+                            rootRef.setValue("A");
 
+                            rejectBtn.setVisibility(View.GONE);
+                            Toast.makeText(itemView.getContext()," Request Rejected",Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
             });
         }

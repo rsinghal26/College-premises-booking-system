@@ -31,10 +31,10 @@ public class AdminAcceptRequest extends AppCompatActivity {
     private RecyclerView mUserResponse;
     private DatabaseReference mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
-//    Date today = new Date();
-//    SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
-//    String newDateToStr = date.format(today);
-
+    Date today = new Date();
+    SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+    String newDateToStr = date.format(today);
+    private String what;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,11 +117,16 @@ public class AdminAcceptRequest extends AppCompatActivity {
                 (UserResponse.class,R.layout.accept_card, AdminAcceptRequest.UserResponseViewHolder.class,mDatabase) {
             @Override
             protected void populateViewHolder(AdminAcceptRequest.UserResponseViewHolder userViewHolder, UserResponse model, int position) {
-//                if(!(model.getuDate().equals(newDateToStr))){
-//                    final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("LTs").child(model.getWhatBooked()).child(model.getDaySlot()).child(model.getSlotChoosen());
-//                    rootRef.setValue("A");
-//                    Toast.makeText(AdminAcceptRequest.this,newDateToStr,Toast.LENGTH_SHORT).show();
-//                }
+                if(!(model.getuDate().equals(newDateToStr))){
+                    if(model.getWhatBooked().substring(0,3).equals("Lab")){
+                        what = "CPLabs";
+                    }else {
+                        what = "LTs";
+                    }
+                    final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference(what).child(model.getWhatBooked()).child(model.getDaySlot()).child(model.getSlotChoosen());
+                    rootRef.setValue("A");
+                    Toast.makeText(AdminAcceptRequest.this,newDateToStr,Toast.LENGTH_SHORT).show();
+                }
                 userViewHolder.setReason(model.getReason());
                 userViewHolder.setSlot(model.getSlotChoosen());
                 userViewHolder.setMike(model.getMike());
@@ -185,7 +190,6 @@ public class AdminAcceptRequest extends AppCompatActivity {
         }
 
         public void setNumber(String number ){
-
             TextView number_= (TextView)itemView.findViewById(R.id.whatBooked);
             number_.setText(String.valueOf(number));
         }
