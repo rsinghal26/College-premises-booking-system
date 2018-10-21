@@ -216,9 +216,5 @@ public class DeveloperFragment extends Fragment {
             TextView date = (TextView)itemView.findViewById(R.id.forBooked);
             date.setText(String.valueOf(date2));
         }
-        public TextView getsome(){
-            TextView sts = (TextView)itemView.findViewById(R.id.status);
-            return sts;
-        }
     }
 }
