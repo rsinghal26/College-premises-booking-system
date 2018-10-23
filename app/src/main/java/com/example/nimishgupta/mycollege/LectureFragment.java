@@ -31,6 +31,7 @@ public class LectureFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ((BottomNavigation) getActivity()).setActionBarTitle("Lecture Hall Booking");
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_lecture, container, false);
         searchButton = (Button) v.findViewById(R.id.searchButton);

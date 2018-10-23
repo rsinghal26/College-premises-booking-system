@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,11 +49,56 @@ public class freeSlotActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     String labNumber,labSlot, ltno, ltSlot;
     Encryption encryption = new Encryption();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free_slot);
         mListView = (ListView)findViewById(R.id.listiew);
+        getSupportActionBar().setTitle("Availability");
+
+
+        if(isOnline()) {
+        }
+        else{
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(freeSlotActivity.this).create();
+
+                alertDialog.setTitle("Warning!!");
+                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again.");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+                alertDialog.show();
+            } catch (Exception e) {
+//                Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
+            }
+            return;
+        }
+
+        if(!checkTimeIntervel()){
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(freeSlotActivity.this).create();
+
+                alertDialog.setTitle("Warning!!");
+                alertDialog.setMessage("Booking system can only available between 8:00 A.M. to 6:00 P.M.");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+                alertDialog.show();
+            } catch (Exception e) {
+//                Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
+            }
+            return;
+        }
 
         //List adapter------------------------------------------------------------
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,infoKeys){
@@ -83,32 +129,9 @@ public class freeSlotActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 showInputBox(infoKeys.get(position),position);
-//                progressDialog.dismiss();
             }
         });
 
-
-
-        if(isOnline()) {
-        }
-        else{
-            try {
-                AlertDialog alertDialog = new AlertDialog.Builder(freeSlotActivity.this).create();
-
-                alertDialog.setTitle("Warning!!");
-                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again.");
-                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-                alertDialog.show();
-            } catch (Exception e) {
-//                Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
-            }
-        }
 
         if(getIntent().hasExtra("type")){
 
@@ -228,6 +251,42 @@ public class freeSlotActivity extends AppCompatActivity {
 
     }
 
+    public boolean checkTimeIntervel() {
+
+        Date today = new Date();
+        SimpleDateFormat time = new SimpleDateFormat("kk:mm:ss");
+        String timeToString = time.format(today);
+        try {
+            String string1 = "8:00:00";
+            Date time1 = new SimpleDateFormat("HH:mm:ss").parse(string1);
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(time1);
+
+            String string2 = "18:00:00";
+            Date time2 = new SimpleDateFormat("HH:mm:ss").parse(string2);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(time2);
+            calendar2.add(Calendar.DATE, 1);
+
+            String someRandomTime = timeToString;
+
+            Date d = new SimpleDateFormat("HH:mm:ss").parse(someRandomTime);
+            Calendar calendar3 = Calendar.getInstance();
+            calendar3.setTime(d);
+            calendar3.add(Calendar.DATE, 1);
+
+            Date x = calendar3.getTime();
+            if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 //    For checking  Internet Connection...
     public boolean isOnline() {
         ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -280,7 +339,7 @@ public class freeSlotActivity extends AppCompatActivity {
                             //Toast.makeText(freeSlotActivity.this,"share data "+userName,Toast.LENGTH_SHORT).show();
 
                             final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
-                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("allBooking");
+                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("PendingRequests");
 
                             rootRef.setValue("NA");
                             String id = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);
@@ -300,7 +359,7 @@ public class freeSlotActivity extends AppCompatActivity {
                         if (!TextUtils.isEmpty(newValue) && !TextUtils.isEmpty(mReason)) {
                             final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("LTs").child(ltno).child(ltSlot).child(newValue);
                             final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses").child(encryption.md5(userName));
-                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("allBooking");
+                            final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("PendingRequests");
 
                             rootRef.setValue("NA");
                             String id = encryption.md5(encryption.md5(userName)+dateToStr+timeToStr);//firebaseUserResponse.push().getKey();

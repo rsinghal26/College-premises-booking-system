@@ -4,23 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminViewActivity">
-
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:paddingBottom="10dp"
-        android:layout_marginTop="5dp"
+        android:text="Booking Requests"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:textStyle="bold"
-        android:textColor="#FF0000"
-        android:text="Think twice before clicking Accept/Reject...\nActions can't be undone"/>
+        android:gravity="center"
+        android:textSize="20dp"
+        />
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/text"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/darker_gray" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/myRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="45dp">
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

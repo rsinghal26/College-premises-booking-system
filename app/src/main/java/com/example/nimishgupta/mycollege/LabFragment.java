@@ -24,6 +24,9 @@ public class LabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((BottomNavigation) getActivity()).setActionBarTitle("Lab Booking");
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_lab, container, false);
         //Lab Numbers

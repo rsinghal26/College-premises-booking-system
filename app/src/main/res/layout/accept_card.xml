@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="12dp"
+    android:elevation="200dp"
+    android:padding="10dp"
+    android:layout_margin="10dp">
+
+
+    <LinearLayout
+        android:id="@+id/cardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#99ff99"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/userWhoBooked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="User Name" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/reasonReqdForBooking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reason of booking" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mike: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ifMikeReqd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="M" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="   Projector: "
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/ifProjectorReqd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="P" />
+
+            <TextView
+                android:id="@+id/tex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="," />
+
+            <TextView
+                android:id="@+id/whatBooked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="wBook"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/ontext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="on "
+                android:layout_marginLeft="0dp" />
+
+            <TextView
+                android:id="@+id/forBooked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="for"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/userReqdslot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slot"
+                android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.SEND"/>
 
     <application
         android:name=".LNMIIT"
@@ -29,6 +30,9 @@
         <activity android:name=".freeSlotActivity" />
         <activity android:name=".AdminViewActivity" />
         <activity android:name=".SignUp" />
+        <activity android:name=".AdminAcceptRequest" />
+        <activity android:name=".AdminRejectRequest" />
+        <activity android:name=".feedback"></activity>
     </application>
 
 </manifest>

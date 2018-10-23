@@ -132,15 +132,19 @@
                 android:id="@+id/acceptButton"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="@drawable/button_round"
+                android:backgroundTint="#ca2b8c29"
                 android:text="Accept"
-                android:textColor="#ca2b8c29" />
+                android:layout_marginRight="2dp"
+                android:textColor="#ffffff" />
 
             <Button
                 android:id="@+id/rejectButton"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:text="Reject"
-                android:textColor="#caff1b2a"
+                android:background="@drawable/button_round"
+                android:textColor="#ffffff"
                 />
 
         </LinearLayout>

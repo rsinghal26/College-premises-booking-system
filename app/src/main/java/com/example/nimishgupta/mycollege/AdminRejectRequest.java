@@ -1,79 +1,54 @@
 package com.example.nimishgupta.mycollege;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import static android.content.Context.MODE_PRIVATE;
+public class AdminRejectRequest extends AppCompatActivity {
 
-
-public class DeveloperFragment extends Fragment {
-
-    private RecyclerView mUserSide;
+    private RecyclerView mUserResponse;
     private DatabaseReference mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    Encryption encryption = new Encryption();
-    private ProgressDialog progressDialog;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        ((BottomNavigation) getActivity()).setActionBarTitle("Your Booking");
+        setContentView(R.layout.activity_admin_view);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Reject Requests");
 
         if(isOnline()) {
-
-            progressDialog = new ProgressDialog(getContext());
-            progressDialog.setMessage("Fetching Data...");
-            progressDialog.show();
-            Runnable progressRunnable = new Runnable() {
-
-                @Override
-                public void run() {
-                    progressDialog.dismiss();
-                }
-            };
-            Handler pdCanceller = new Handler();
-            pdCanceller.postDelayed(progressRunnable, 3000);
         }
         else{
             try {
-                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(AdminRejectRequest.this).create();
 
                 alertDialog.setTitle("Warning!!");
                 alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again.");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                 alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
+                        finish();
                     }
                 });
 
@@ -83,30 +58,35 @@ public class DeveloperFragment extends Fragment {
             }
         }
 
-        // Inflate the layout for this fragment
-        SharedPreferences sp = getContext().getSharedPreferences("com.example.nimishgupta.mycollege",MODE_PRIVATE);
-        String userName = sp.getString("userID","default");
-
-        View view = inflater.inflate(R.layout.fragment_developer, container, false);
-        mDatabase=FirebaseDatabase.getInstance().getReference().child("UserResponses").child(encryption.md5(userName));
-        mUserSide=(RecyclerView)view.findViewById(R.id.myRecyclerView);
-        mUserSide.setHasFixedSize(true);
-        mUserSide.setLayoutManager(new LinearLayoutManager(getContext()));
+        mDatabase=FirebaseDatabase.getInstance().getReference().child("RejectRequests");
+        mDatabase.keepSynced(true);
+        mUserResponse=(RecyclerView)findViewById(R.id.myRecyclerView);
+        mUserResponse.setHasFixedSize(true);
+        mUserResponse.setLayoutManager(new LinearLayoutManager(this));
         setupFirebaseListener();
+    }
 
-        return view;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public boolean isOnline() {
-        ConnectivityManager conMgr = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
         if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
-            Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_LONG).show();
+            Toast.makeText(AdminRejectRequest.this, "No Internet connection!", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
     }
+
 
     private void setupFirebaseListener(){
         Log.d("setup firebase listener","setting up auth state listener");
@@ -119,40 +99,13 @@ public class DeveloperFragment extends Fragment {
                 }
                 else {
                     Log.d("onAuthStateChanged","signed out");
-                    Toast.makeText(getActivity(), "Siging out", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(),MainActivity.class);
+                    Toast.makeText(AdminRejectRequest.this, "Siging out", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(AdminRejectRequest.this,MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
             }
         };
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        SharedPreferences sp = this.getActivity().getSharedPreferences("com.example.nimishgupta.mycollege",MODE_PRIVATE);
-        final String userName = sp.getString("userID","default");
-
-        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
-        FirebaseRecyclerAdapter<UserResponse,DeveloperFragment.UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, UserResponseViewHolder>
-                (UserResponse.class,R.layout.user_side_card, DeveloperFragment.UserResponseViewHolder.class,mDatabase) {
-            @Override
-            protected void populateViewHolder(DeveloperFragment.UserResponseViewHolder userViewHolder, UserResponse model, int position) {
-
-                userViewHolder.setReason(model.getReason());
-                userViewHolder.setSlot(model.getSlotChoosen());
-                userViewHolder.setMike(model.getMike());
-                userViewHolder.setProjector(model.getProjector());
-                userViewHolder.setNumber(model.getWhatBooked());
-                userViewHolder.setStatus(model.getStatus());
-                userViewHolder.setuDate(model.getuDate());
-                userViewHolder.setuTime(model.getuTime());
-                userViewHolder.setuNextDate(model.getuNextDate());
-            }
-        };
-        mUserSide.setAdapter(firebaseRecyclerAdapter);
-
     }
 
     @Override
@@ -163,58 +116,93 @@ public class DeveloperFragment extends Fragment {
         }
     }
 
-    public static class UserResponseViewHolder extends RecyclerView.ViewHolder
-    {
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
+        FirebaseRecyclerAdapter<UserResponse,AdminRejectRequest.UserResponseViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserResponse, AdminRejectRequest.UserResponseViewHolder>
+                (UserResponse.class,R.layout.reject_card, AdminRejectRequest.UserResponseViewHolder.class,mDatabase) {
+            @Override
+            protected void populateViewHolder(AdminRejectRequest.UserResponseViewHolder userViewHolder, UserResponse model, int position) {
+                userViewHolder.setReason(model.getReason());
+                userViewHolder.setSlot(model.getSlotChoosen());
+                userViewHolder.setMike(model.getMike());
+                userViewHolder.setProjector(model.getProjector());
+                userViewHolder.setUser(model.getUserName());
+                userViewHolder.setNumber(model.getWhatBooked());
+                userViewHolder.setStatus(model.getStatus());
+                userViewHolder.setuNextDate(model.getuNextDate());
+                userViewHolder.setuDate(model.getuDate());
+                userViewHolder.setuTime(model.getuTime());
+                userViewHolder.setDaySlot(model.getDaySlot());
+
+            }
+        };
+        mUserResponse.setAdapter(firebaseRecyclerAdapter);
+    }
+
+
+    public static class UserResponseViewHolder extends RecyclerView.ViewHolder {
         View mView;
+
         public UserResponseViewHolder(View responseView)
         {
             super(responseView);
             mView=itemView;
-
         }
 
         public void setReason(String reason){
             TextView reasonReqdForBooking = (TextView)itemView.findViewById(R.id.reasonReqdForBooking);
             reasonReqdForBooking.setText(reason);
         }
+
+        public void setUser(String user){
+            TextView userWhoBooked = (TextView)itemView.findViewById(R.id.userWhoBooked);
+            userWhoBooked.setText(user);
+        }
+
         public void setSlot(String slot){
             TextView slotBooked = (TextView)itemView.findViewById(R.id.userReqdslot);
             slotBooked.setText(slot);
         }
+
         public void setProjector(int projector){
             TextView projector_ = (TextView)itemView.findViewById(R.id.ifProjectorReqd);
             projector_.setText(String.valueOf(projector));
         }
+
         public void setMike(int mike){
             TextView mike_ = (TextView)itemView.findViewById(R.id.ifMikeReqd);
             mike_.setText(String.valueOf(mike));
         }
+
         public void setStatus(String status){
-            TextView status_ = (TextView)itemView.findViewById(R.id.status);
-            if(status.equals("Rejected")){
-                status_.setTextColor(Color.parseColor("#e60000"));
-            }else if(status.equals("Accepted")){
-                status_.setTextColor(Color.parseColor("#33cc33"));
-            }else{
-                status_.setTextColor(Color.parseColor("#cccc00"));
-            }
-            status_.setText(String.valueOf(status));
+            //statusOfBooking = status;
+            //card.setBackgroundColor(Color.parseColor("#80ff80"));
         }
+
         public void setNumber(String number ){
             TextView  number_= (TextView)itemView.findViewById(R.id.whatBooked);
             number_.setText(String.valueOf(number));
         }
+
         public void setuDate(String date1){
-            TextView date = (TextView)itemView.findViewById(R.id.dateBooked);
-            date.setText(String.valueOf(date1));
+
         }
+
         public void setuTime(String time1){
-            TextView time = (TextView)itemView.findViewById(R.id.timeBooked);
-            time.setText(String.valueOf(time1));
+
         }
+
         public void setuNextDate(String date2){
+
             TextView date = (TextView)itemView.findViewById(R.id.forBooked);
             date.setText(String.valueOf(date2));
+        }
+
+        public  void setDaySlot(String dayTime){
+
         }
     }
 }
