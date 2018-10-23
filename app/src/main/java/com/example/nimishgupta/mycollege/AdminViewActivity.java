@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class AdminViewActivity extends AppCompatActivity {
     private RecyclerView mUserResponse;
     private DatabaseReference mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    boolean doubleBackToExitPressedOnce = false;
 
     Date today = new Date();
     SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
@@ -72,6 +74,24 @@ public class AdminViewActivity extends AppCompatActivity {
         mUserResponse.setHasFixedSize(true);
         mUserResponse.setLayoutManager(new LinearLayoutManager(this));
         setupFirebaseListener();
+    }
+
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
     public boolean isOnline() {
