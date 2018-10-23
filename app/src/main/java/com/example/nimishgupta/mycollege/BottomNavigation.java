@@ -2,6 +2,7 @@ package com.example.nimishgupta.mycollege;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
@@ -11,11 +12,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import android.widget.Toolbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class BottomNavigation extends AppCompatActivity {
-    private Toolbar mToolBar;
+    boolean doubleBackToExitPressedOnce = false;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -74,6 +74,7 @@ public class BottomNavigation extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_user,menu);
         return true;
     }
+
     public boolean onOptionsItemSelected(MenuItem menuItem){
         int id = menuItem.getItemId();
         switch (id){
@@ -86,5 +87,18 @@ public class BottomNavigation extends AppCompatActivity {
         }
         return true;
     }
-
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
 }
