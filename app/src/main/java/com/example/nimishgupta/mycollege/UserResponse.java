@@ -22,12 +22,7 @@ public class UserResponse {
     public UserResponse(){
 
     }
-//    public Button getAcceptBtn(){
-//        return acceptBtn;
 
-
-
-//    }
 
     public String getReason() {
         return reason;

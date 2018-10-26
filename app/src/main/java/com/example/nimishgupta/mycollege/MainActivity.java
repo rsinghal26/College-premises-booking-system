@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,"Logged in as "+loggedInUser,Toast.LENGTH_SHORT).show();
             if(loggedInUser.equals("rjt1447@gmail.com")){
                 startActivity(new Intent(MainActivity.this,AdminViewActivity.class));
+            }else if(loggedInUser.equals("17ucs114@lnmiit.ac.in")) {
+                startActivity(new Intent(MainActivity.this,SAC_adminActivity.class));
             }else {
                 startActivity(new Intent(MainActivity.this,BottomNavigation.class));
             }
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(MainActivity.this,"share data "+userName,Toast.LENGTH_SHORT).show();
             if(loggedInUser.equals("rjt1447@gmail.com")){
                 startActivity(new Intent(MainActivity.this,AdminViewActivity.class));
+            }else if(loggedInUser.equals("17ucs114@lnmiit.ac.in")) {
+                startActivity(new Intent(MainActivity.this,SAC_adminActivity.class));
             }else {
                 startActivity(new Intent(MainActivity.this,BottomNavigation.class));
             }

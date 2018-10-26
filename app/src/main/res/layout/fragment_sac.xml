@@ -7,11 +7,90 @@
     tools:context=".SACFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <EditText
+        android:id="@+id/reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:hint="Reason for booking"
+        android:inputType="textMultiLine" />
+
     <Button
-        android:id="@+id/button_sac"
+        android:id="@+id/fromTimeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="SAC Button" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="198dp"
+        android:text="FROM" />
+
+    <Button
+        android:id="@+id/toTimeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fromTimeBtn"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50dp"
+        android:text="TO" />
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="346dp"
+        android:layout_marginRight="35dp"
+        android:background="@drawable/button_round"
+        android:text="SUBMIT"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/fromTextView"
+        android:layout_width="87dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/fromTimeBtn"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="269dp"
+        android:gravity="right"
+        android:textSize="15dp"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/toTextView"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/toTimeBtn"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="268dp"
+        android:layout_marginEnd="50dp"
+        android:gravity="left"
+        android:textSize="15dp"
+        android:text="" />
+
+    <Button
+        android:id="@+id/yourBookings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="85dp"
+        android:layout_marginBottom="98dp"
+        android:background="@drawable/button_round"
+        android:text="Your Bookings"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>
