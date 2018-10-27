@@ -29,7 +29,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SACFragment extends Fragment {
 
-    private TextView fromTextView, toTextView ;
+    private TextView fromTextView, toTextView, fromSample, toSample ;
     private EditText reasonText;
     private Button submit, yourBookins;
     @Override
@@ -63,6 +63,9 @@ public class SACFragment extends Fragment {
 
         fromTextView = (TextView)view.findViewById(R.id.fromTextView);
         toTextView = (TextView)view.findViewById(R.id.toTextView);
+
+        fromSample = (TextView)view.findViewById(R.id.fromSample);
+        toSample = (TextView)view.findViewById(R.id.toSample);
         reasonText = (EditText)view.findViewById(R.id.reason);
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -83,19 +86,38 @@ public class SACFragment extends Fragment {
                 String fromTime = fromTextView.getText().toString();
                 String toTime = toTextView.getText().toString();
                 String reason = reasonText.getText().toString();
+                String fromSampleVar = fromSample.getText().toString();
+                String toSampleVar = toSample.getText().toString();
 
-                SharedPreferences sp = getActivity().getSharedPreferences("com.example.nimishgupta.mycollege",MODE_PRIVATE);
-                String userName = sp.getString("userID","default");
-                Encryption encryption = new Encryption();
-                final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("SAC_bookings");
-                final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses_SAC").child(encryption.md5(userName));
-                String id = encryption.md5(encryption.md5(userName)+fromTime+toTime);
+                if(reason.equals("") || toTime.equals("") || fromTime.equals("")){
+                    Toast.makeText(getActivity(), "Please enter all required fields", Toast.LENGTH_SHORT).show();
+                }else{
+                    int from, to;
+                    try{
+                        from = Integer.parseInt(fromSampleVar);
+                        to = Integer.parseInt(toSampleVar);
 
-                SAC_response sacResponse = new SAC_response(reason,userName,"Pending",fromTime,toTime,dateToStr,timeToStr,nextDateStr);
-                firebaseUserResponse.child(id).setValue(sacResponse);
-                rootRef.child(id).setValue(sacResponse);
-                Toast.makeText(getActivity(), "Booking request has been submitted", Toast.LENGTH_LONG).show();
+                        if(from >= to){
+                            Toast.makeText(getActivity(),"Invalid Time interval" , Toast.LENGTH_SHORT).show();
+                        }else {
 
+                            SharedPreferences sp = getActivity().getSharedPreferences("com.example.nimishgupta.mycollege",MODE_PRIVATE);
+                            String userName = sp.getString("userID","default");
+                            Encryption encryption = new Encryption();
+                            final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("SAC_bookings");
+                            final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses_SAC").child(encryption.md5(userName));
+                            String id = encryption.md5(encryption.md5(userName)+fromTime+toTime);
+
+                            SAC_response sacResponse = new SAC_response(reason,userName,"Pending",fromTime,toTime,dateToStr,timeToStr,nextDateStr);
+                            firebaseUserResponse.child(id).setValue(sacResponse);
+                            rootRef.child(id).setValue(sacResponse);
+                            Toast.makeText(getActivity(), "Booking request has been submitted", Toast.LENGTH_LONG).show();
+
+                        }
+                    }catch(NumberFormatException ex){ // handle your exception
+
+                    }
+                }
             }
         });
 

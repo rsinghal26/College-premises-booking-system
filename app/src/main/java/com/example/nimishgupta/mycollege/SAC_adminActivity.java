@@ -104,11 +104,11 @@ public class SAC_adminActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
     }
     public void AcceptedSlots(){
-        //startActivity(new Intent(SAC_adminActivity.this,AdminAcceptRequest.class));
+        startActivity(new Intent(SAC_adminActivity.this,SAC_adminAccept.class));
         //Toast.makeText(AdminViewActivity.this,"Accepted Slots",Toast.LENGTH_SHORT).show();
     }
     public void RejectedSlots(){
-        //startActivity(new Intent(SAC_adminActivity.this,AdminRejectRequest.class));
+        startActivity(new Intent(SAC_adminActivity.this,SAC_adminReject.class));
 
     }
     public void Feedback(){
@@ -194,7 +194,7 @@ public class SAC_adminActivity extends AppCompatActivity {
     public static class UserResponseViewHolder extends RecyclerView.ViewHolder {
         View mView;
         private Button acceptBtn, rejectBtn;
-        private String mReason, slotchoosen,userName, fromTime,toTime, roomType,daySlot, whatYoyBooked, nextDateStr;
+        private String mReason, slotchoosen,userName, fromTime,toTime,uDate, uTime, nextDateStr;
 //        int projectorReqd, mikeReqd;
         Encryption encryption = new Encryption();
 
@@ -220,14 +220,14 @@ public class SAC_adminActivity extends AppCompatActivity {
                             dialog.dismiss();
                             final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses_SAC").child(encryption.md5(userName));
                             final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("SAC_bookings");
-                            //final DatabaseReference acceptRef = FirebaseDatabase.getInstance().getReference("AcceptRequests");
-                            //SAC_response sac_response = new SAC_response(mReason, userName, "Accepted",dateToStr,timeToStr,nextDateStr,daySlot);
+                            final DatabaseReference acceptRef = FirebaseDatabase.getInstance().getReference("SAC_AcceptRequests");
+                            SAC_response sac_response = new SAC_response(mReason, userName, "Accepted",fromTime,toTime,uDate, uTime,nextDateStr);
 
                             String uid = encryption.md5(encryption.md5(userName)+fromTime+toTime);
                             firebaseUserResponse.child(uid).child("status").setValue("Accepted");
 
                             //==================cut and paste booking data fromm PandingRequest to AcceptRequests================
-                            //acceptRef.child(uid).setValue(userResponse);
+                            acceptRef.child(uid).setValue(sac_response);
                             firebaseUserResponseForAdmin.child(uid).removeValue();
 
                             acceptBtn.setVisibility(View.GONE);
@@ -257,17 +257,16 @@ public class SAC_adminActivity extends AppCompatActivity {
                             dialog.dismiss();
                             final DatabaseReference firebaseUserResponse = FirebaseDatabase.getInstance().getReference("UserResponses_SAC").child(encryption.md5(userName));
                             final DatabaseReference firebaseUserResponseForAdmin = FirebaseDatabase.getInstance().getReference("SAC_bookings");
-                            //final DatabaseReference rejectRef = FirebaseDatabase.getInstance().getReference("RejectRequests");
-                            //final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference(roomType).child(whatYoyBooked).child(daySlot).child(slotchoosen);
-                            //UserResponse userResponse = new UserResponse(mReason, slotchoosen, userName, mikeReqd, projectorReqd,whatYoyBooked ,"Rejected",dateToStr,timeToStr,nextDateStr,daySlot);
+                            final DatabaseReference rejectRef = FirebaseDatabase.getInstance().getReference("SAC_RejectRequests");
+                            SAC_response sac_response = new SAC_response(mReason, userName, "Rejected",fromTime,toTime,uDate, uTime,nextDateStr);
 
                             String uid = encryption.md5(encryption.md5(userName)+fromTime+toTime);
                             firebaseUserResponse.child(uid).child("status").setValue("Rejected");
 
                             //==================cut and paste booking data fromm PandingRequest to RejectRequests================
-                            //rejectRef.child(uid).setValue(userResponse);
+                            rejectRef.child(uid).setValue(sac_response);
                             firebaseUserResponseForAdmin.child(uid).removeValue();
-                            //rootRef.setValue("A");
+
                             rejectBtn.setVisibility(View.GONE);
                             Toast.makeText(itemView.getContext()," Request Rejected",Toast.LENGTH_SHORT).show();
 
@@ -286,7 +285,7 @@ public class SAC_adminActivity extends AppCompatActivity {
 
 
         public void setReason(String reason){
-            //mReason = reason;
+            mReason = reason;
             TextView reasonReqdForBooking = (TextView)itemView.findViewById(R.id.reasonReqdForBooking);
             reasonReqdForBooking.setText(reason);
         }
@@ -298,6 +297,7 @@ public class SAC_adminActivity extends AppCompatActivity {
         }
 
         public void setDay(String day){
+            nextDateStr = day;
             TextView _day = (TextView)itemView.findViewById(R.id.day);
             _day.setText(day);
         }
@@ -319,9 +319,13 @@ public class SAC_adminActivity extends AppCompatActivity {
             //card.setBackgroundColor(Color.parseColor("#80ff80"));
         }
 
-        public void setuDate(String date){}
+        public void setuDate(String date){
+            uDate = date;
+        }
 
-        public void setuTime(String time){}
+        public void setuTime(String time){
+            uTime = time;
+        }
 
 
     }

@@ -34,7 +34,9 @@
         <activity android:name=".AdminRejectRequest" />
         <activity android:name=".feedback" />
         <activity android:name=".SAC_adminActivity" />
-        <activity android:name=".your_SAC_booking"></activity>
+        <activity android:name=".your_SAC_booking" />
+        <activity android:name=".SAC_adminAccept" />
+        <activity android:name=".SAC_adminReject"></activity>
     </application>
 
 </manifest>
