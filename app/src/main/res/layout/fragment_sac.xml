@@ -19,6 +19,7 @@
         android:layout_marginTop="100dp"
         android:ems="10"
         android:hint="Reason for booking"
+        android:maxLines="3"
         android:inputType="textMultiLine" />
 
     <Button
@@ -42,7 +43,7 @@
 
     <Button
         android:id="@+id/submitBtn"
-        android:layout_width="match_parent"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -109,7 +110,7 @@
         android:text="" />
     <Button
         android:id="@+id/yourBookings"
-        android:layout_width="match_parent"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

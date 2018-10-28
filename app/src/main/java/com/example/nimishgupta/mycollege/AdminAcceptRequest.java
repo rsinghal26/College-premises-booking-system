@@ -41,7 +41,7 @@ public class AdminAcceptRequest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Accept Requests");
+        getSupportActionBar().setTitle("Accepted Requests");
 
         if(isOnline()) {
         }

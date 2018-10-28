@@ -62,7 +62,7 @@ public class DeveloperFragment extends Fragment {
                 }
             };
             Handler pdCanceller = new Handler();
-            pdCanceller.postDelayed(progressRunnable, 3000);
+            pdCanceller.postDelayed(progressRunnable, 2000);
         }
         else{
             try {

@@ -7,6 +7,17 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your Lab's and LT's Bookings Status"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="20dp"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/myRecyclerView"
@@ -15,7 +26,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="45dp">
 
     </android.support.v7.widget.RecyclerView>
 

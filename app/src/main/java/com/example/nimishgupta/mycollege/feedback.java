@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ public class feedback extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         getSupportActionBar().setTitle("App Feedback");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         Button submit = (Button)findViewById(R.id.submit);
@@ -39,5 +41,15 @@ public class feedback extends AppCompatActivity {
                 startActivity(Intent.createChooser(sendIntent, "Send email"));
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home ) {
+            finish();
+            return true;
+        }
+        // other menu select events may be present here
+
+        return super.onOptionsItemSelected(item);
     }
 }

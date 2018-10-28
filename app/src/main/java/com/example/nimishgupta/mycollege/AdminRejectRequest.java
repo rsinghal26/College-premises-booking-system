@@ -35,7 +35,7 @@ public class AdminRejectRequest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Reject Requests");
+        getSupportActionBar().setTitle("Rejected Requests");
 
         if(isOnline()) {
         }

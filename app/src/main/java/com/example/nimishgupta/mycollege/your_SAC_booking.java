@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,18 @@ public class your_SAC_booking extends AppCompatActivity {
         getSupportActionBar().setTitle("Your SAC Requests");
 
         if(isOnline()) {
+            progressDialog = new ProgressDialog(your_SAC_booking.this);
+            progressDialog.setMessage("Fetching Data...");
+            progressDialog.show();
+            Runnable progressRunnable = new Runnable() {
+
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                }
+            };
+            Handler pdCanceller = new Handler();
+            pdCanceller.postDelayed(progressRunnable, 2000);
         }
         else{
             try {

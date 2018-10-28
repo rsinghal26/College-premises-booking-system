@@ -53,7 +53,7 @@ public class SignUp extends AppCompatActivity {
                     String mcnfpwd = cnfpwd.getText().toString();
 
                     if(memail.isEmpty() || mpwd.isEmpty() || mcnfpwd.isEmpty()){
-                        Toast.makeText(SignUp.this,"Please enter all the details",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUp.this,"Please enter all the details!",Toast.LENGTH_SHORT).show();
                     }
                     else{
                         StringBuffer buffer = new StringBuffer(memail);

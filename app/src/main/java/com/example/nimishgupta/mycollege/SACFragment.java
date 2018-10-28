@@ -129,8 +129,6 @@ public class SACFragment extends Fragment {
                 startActivity(new Intent(getActivity(),your_SAC_booking.class));
             }
         });
-
-
         return view;
     }
 

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         if(user !=null){
             finish();
             String loggedInUser = user.getEmail().toString();
-            Toast.makeText(MainActivity.this,"Logged in as "+loggedInUser,Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this,"Logged in as "+loggedInUser,Toast.LENGTH_SHORT).show();
             if(loggedInUser.equals("rjt1447@gmail.com")){
                 startActivity(new Intent(MainActivity.this,AdminViewActivity.class));
             }else if(loggedInUser.equals("17ucs114@lnmiit.ac.in")) {
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void Validate(String username, String password){
-        progressDialog.setMessage("Logged In...");
+        progressDialog.setMessage("Logging In...");
         progressDialog.show();
         firebaseAuth.signInWithEmailAndPassword(username,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         Boolean emailFlag = firebaseUser.isEmailVerified();
         String loggedInUser = firebaseUser.getEmail().toString();
 
-        Toast.makeText(MainActivity.this,"Logged in as "+loggedInUser,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this,"Logged in as "+loggedInUser,Toast.LENGTH_SHORT).show();
         if (emailFlag){
             finish();
             sharedPreferences = this.getSharedPreferences("com.example.nimishgupta.mycollege",MODE_PRIVATE);

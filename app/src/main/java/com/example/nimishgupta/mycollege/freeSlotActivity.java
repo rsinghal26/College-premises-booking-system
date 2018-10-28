@@ -38,7 +38,6 @@ import java.util.Date;
 public class freeSlotActivity extends AppCompatActivity {
 
     private ListView mListView;
-
     private Button submit;
     private ArrayList<String> infoValues = new ArrayList<>();
     private ArrayList<String> infoKeys = new ArrayList<>();
@@ -72,7 +71,6 @@ public class freeSlotActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-
                 alertDialog.show();
             } catch (Exception e) {
 //                Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
