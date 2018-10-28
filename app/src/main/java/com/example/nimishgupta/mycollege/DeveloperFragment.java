@@ -47,7 +47,7 @@ public class DeveloperFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ((BottomNavigation) getActivity()).setActionBarTitle("Your Booking");
+        ((BottomNavigation) getActivity()).setActionBarTitle("Your LT's/LAB's Booking");
 
         if(isOnline()) {
 

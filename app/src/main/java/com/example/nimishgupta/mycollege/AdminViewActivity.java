@@ -227,7 +227,7 @@ public class AdminViewActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
-                    builder.setTitle("Conformation");
+                    builder.setTitle("Confirmation");
                     builder.setMessage("Are you sure you want to Accept this request?");
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -276,7 +276,7 @@ public class AdminViewActivity extends AppCompatActivity {
                 public void onClick(View view) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
-                    builder.setTitle("Conformation");
+                    builder.setTitle("Confirmation");
                     builder.setMessage("Are you sure you want to Reject this request?");
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {

@@ -7,20 +7,20 @@
     tools:context=".freeSlotActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Available Slots"
+        android:text=""
         android:textSize="15sp"
         android:textStyle="bold" />
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textHeading"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:background="@android:color/darker_gray" />

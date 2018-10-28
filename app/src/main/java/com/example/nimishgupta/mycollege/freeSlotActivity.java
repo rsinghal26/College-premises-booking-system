@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
@@ -55,7 +56,6 @@ public class freeSlotActivity extends AppCompatActivity {
         setContentView(R.layout.activity_free_slot);
         mListView = (ListView)findViewById(R.id.listiew);
         getSupportActionBar().setTitle("Availability");
-
 
         if(isOnline()) {
         }
@@ -152,6 +152,9 @@ public class freeSlotActivity extends AppCompatActivity {
                 labNumber = getIntent().getExtras().getString("labNumber");
                 labSlot = getIntent().getExtras().getString("labSlot");
 
+                TextView heading = findViewById(R.id.textHeading);
+                heading.setText("Available Slots for "+labNumber);
+
                 if(labSlot.equals("Morning (8:00 am-12:00 noon)")){
                     labSlot="Morning";
                 }
@@ -197,6 +200,9 @@ public class freeSlotActivity extends AppCompatActivity {
             else if(value.equals("LT")){
                 ltno = getIntent().getExtras().getString("LTNumber");
                 ltSlot = getIntent().getExtras().getString("LTSlot");
+
+                TextView heading = findViewById(R.id.textHeading);
+                heading.setText("Available Slots for "+ltno);
 
                 if(ltSlot.equals("Morning (8:00 am-12:00 noon)")){
                     ltSlot="Morning";
