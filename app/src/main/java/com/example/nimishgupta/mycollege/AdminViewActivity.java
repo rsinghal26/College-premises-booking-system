@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -210,6 +211,7 @@ public class AdminViewActivity extends AppCompatActivity {
         int projectorReqd, mikeReqd;
         Encryption encryption = new Encryption();
 
+
         public UserResponseViewHolder(View responseView)
         {
             super(responseView);
@@ -244,6 +246,17 @@ public class AdminViewActivity extends AppCompatActivity {
 
                             acceptBtn.setVisibility(View.GONE);
                             Toast.makeText(itemView.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+
+                            String uriText =
+                                    "mailto:"+userName +
+                                            "?subject=" + Uri.encode("Booking request for "+whatYoyBooked) +
+                                            "&body=" + Uri.encode("Your booking request for "+whatYoyBooked+" on "+nextDateStr+" "+slotchoosen+" have been ACCEPTED by admin.");
+
+                            Uri uri = Uri.parse(uriText);
+                            Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+                            sendIntent.setData(uri);
+                            Context mContext = itemView.getContext();
+                            mContext.startActivity(Intent.createChooser(sendIntent, "Send email"));
 
                         }
                     });
@@ -284,6 +297,17 @@ public class AdminViewActivity extends AppCompatActivity {
 
                             rejectBtn.setVisibility(View.GONE);
                             Toast.makeText(itemView.getContext()," Request Rejected",Toast.LENGTH_SHORT).show();
+
+                            String uriText =
+                                    "mailto:"+userName +
+                                            "?subject=" + Uri.encode("Booking request for "+whatYoyBooked) +
+                                            "&body=" + Uri.encode("Your booking request for "+whatYoyBooked+" on "+nextDateStr+" "+slotchoosen+" have been REJECTED by admin.");
+
+                            Uri uri = Uri.parse(uriText);
+                            Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+                            sendIntent.setData(uri);
+                            Context mContext = itemView.getContext();
+                            mContext.startActivity(Intent.createChooser(sendIntent, "Send email"));
 
                         }
                     });

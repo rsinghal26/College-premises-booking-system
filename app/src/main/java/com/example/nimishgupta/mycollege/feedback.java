@@ -2,6 +2,7 @@ package com.example.nimishgupta.mycollege;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,13 +28,15 @@ public class feedback extends AppCompatActivity {
                 SharedPreferences sp = feedback.this.getSharedPreferences("com.example.nimishgupta.mycollege",MODE_PRIVATE);
                 String userName = sp.getString("userID","default");
 
-                Intent email = new Intent(Intent.ACTION_SEND);
-                email.putExtra(Intent.EXTRA_EMAIL,new String[] {"16ucs151@lnmiit.ac.in"});
-                email.putExtra(Intent.EXTRA_SUBJECT,"Query regarding CPB app from " + userName);
-                email.putExtra(Intent.EXTRA_TEXT,message);
+                String uriText =
+                        "mailto:developer.cpb@gmail.com" +
+                                "?subject=" + Uri.encode("Query regarding CPB app") +
+                                "&body=" + Uri.encode(message);
 
-                email.setType("message/rfc822");
-                startActivity(Intent.createChooser(email, "Choose app to send email"));
+                Uri uri = Uri.parse(uriText);
+                Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+                sendIntent.setData(uri);
+                startActivity(Intent.createChooser(sendIntent, "Send email"));
             }
         });
     }
