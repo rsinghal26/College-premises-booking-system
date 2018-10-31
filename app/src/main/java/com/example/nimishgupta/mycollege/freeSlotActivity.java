@@ -352,7 +352,7 @@ public class freeSlotActivity extends AppCompatActivity {
                             UserResponse userResponse = new UserResponse(mReason, newValue, userName, mikeReqd, projectorReqd,labNumber ,statusOfBooking,dateToStr,timeToStr,nextDateStr,labSlot);
                             firebaseUserResponse.child(id).setValue(userResponse);
                             firebaseUserResponseForAdmin.child(id).setValue(userResponse);
-                            Toast.makeText(freeSlotActivity.this, newValue + " slot is booked", Toast.LENGTH_LONG).show();
+                            Toast.makeText(freeSlotActivity.this, "Request send to Admin", Toast.LENGTH_SHORT).show();
                             finish();
                         }else {
                             Toast.makeText(freeSlotActivity.this,"Enter your reason", Toast.LENGTH_LONG).show();
