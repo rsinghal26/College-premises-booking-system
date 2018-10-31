@@ -6,4 +6,4 @@ The college premises booking is basically for simplifying the booking process of
 2. Connect with firebase database.
 3. Connect with internet and built this project. 
 
--Android version should be greater then 5.
+- Android version should be greater then 5.
